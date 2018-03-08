@@ -1,0 +1,36 @@
+<ion-content padding>
+  <img src="assets/imgs/logoKSK.png" class="logo"/>
+  <br>
+  <h3 text-center>KSK Volunteer</h3>
+
+  <form [formGroup]="loginForm">
+
+    <ion-item class="common-padding">
+      <ion-label floating>Email</ion-label>
+      <ion-input type="email" [formControl]="loginForm.controls['email']"></ion-input>
+    </ion-item>
+
+    <ion-item class="common-padding">
+      <ion-label floating>Password</ion-label>
+      <ion-input type="password" [formControl]="loginForm.controls['password']"></ion-input>
+    </ion-item>
+
+    <br>
+    <br>
+
+    <ion-row>
+      <ion-col text-center>
+        <button ion-button block (click)="onLogin()">Login</button>
+      </ion-col>
+    </ion-row>
+
+    
+  </form>
+
+  <ion-row>
+    <ion-col text-center>
+      <button ion-button clear (click)="onRegister()">Or register as a volunteer</button>
+    </ion-col>
+  </ion-row>
+
+</ion-content>

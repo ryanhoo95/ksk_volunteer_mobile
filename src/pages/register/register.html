@@ -1,0 +1,131 @@
+<ion-header>
+
+  <ion-navbar text-align="center">
+    <ion-title>Register</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+    <p class="common-padding"><b>Login Credential</b></p>
+
+    <ion-item class="common-padding">
+      <ion-label stacked >Email</ion-label>
+      <ion-input type="Email" ></ion-input>
+    </ion-item>
+
+    <ion-item class="common-padding">
+      <ion-label stacked >Password</ion-label>
+      <ion-input type="Password" ></ion-input>
+    </ion-item>
+
+    <ion-item class="common-padding">
+      <ion-label stacked >Confirm Password</ion-label>
+      <ion-input type="Password" ></ion-input>
+    </ion-item>
+
+    <br>
+
+    <p class="common-padding"><b>Profile</b></p>
+
+    <ion-item class="common-padding">
+      <ion-label stacked >Full Name</ion-label>
+      <ion-input type="text" ></ion-input>
+    </ion-item>
+
+    <ion-item class="common-padding">
+      <ion-label stacked >Profile Name</ion-label>
+      <ion-input type="text" ></ion-input>
+    </ion-item>
+
+    <ion-item class="common-padding">
+      <ion-label stacked>Gender</ion-label>
+      <ion-select>
+        <ion-option value="M" selected="true">Male</ion-option>
+        <ion-option value="F" >Female</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item class="common-padding">
+      <ion-label stacked >IC / Passport No.</ion-label>
+      <ion-input type="text" ></ion-input>
+    </ion-item>
+    
+    <ion-item class="common-padding">
+      <ion-label stacked>Date of Birth</ion-label>
+      <ion-datetime displayFormat="DD MMM YYYY" pickerFormat="DD MMM YYYY"></ion-datetime>
+    </ion-item>
+
+    <ion-item class="common-padding">
+      <ion-label stacked>Phone No.</ion-label>
+      <ion-input type="tel" ></ion-input>
+    </ion-item>
+
+    <ion-item class="common-padding">
+      <ion-label stacked>Address</ion-label>
+      <ion-input type="text" ></ion-input>
+    </ion-item>
+
+    <br>
+
+    <p class="common-padding"><b>Emergency Contact</b></p>
+
+    <ion-item class="common-padding">
+      <ion-label stacked >Phone No.</ion-label>
+      <ion-input type="tel" ></ion-input>
+    </ion-item>
+
+    <ion-item class="common-padding">
+      <ion-label stacked >Name</ion-label>
+      <ion-input type="text" ></ion-input>
+    </ion-item>
+
+    <ion-item class="common-padding">
+      <ion-label stacked >Relation</ion-label>
+      <ion-input type="text" placeholder="Eg: Father"></ion-input>
+    </ion-item>
+
+    <br>
+
+    <p class="common-padding"><b>Survey</b></p>
+
+    <ion-item class="common-padding">
+      <ion-label stacked>Occupation</ion-label>
+      <ion-select>
+        <ion-option value="1" selected="true">Student</ion-option>
+        <ion-option value="2" >Government</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item class="common-padding">
+      <ion-label stacked>How you get know to Kechara Soup Kitchen</ion-label>
+      <ion-select>
+        <ion-option value="1" selected="true">Social Media</ion-option>
+        <ion-option value="2" >Magazine</ion-option>
+      </ion-select>
+      <ion-input type="text" [hidden]="true"></ion-input>
+    </ion-item>
+
+    <br>
+    <ion-row class="common-padding-right">
+      <ion-col col-2>
+        <ion-item>
+          <ion-checkbox class="zero-margin-top" checked="false" ></ion-checkbox>
+        </ion-item>
+      </ion-col>
+
+      <ion-col col-10>
+        I have read and understand the terms and conditions.
+      </ion-col>
+    </ion-row>
+
+    <br>
+
+    <ion-row>
+      <ion-col text-center>
+        <button ion-button block>Register</button>
+      </ion-col>
+    </ion-row>
+
+    <br>
+</ion-content>

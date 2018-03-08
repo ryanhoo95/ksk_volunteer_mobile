@@ -14,3 +14,25 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+// .toolbar {
+//     text-align: center;
+// }
+
+.button {
+    text-transform: unset
+}
+
+.common-padding {
+    padding-left: 16px !important;
+    padding-right: 16px !important
+}
+
+.common-padding-right{
+    padding-left: 0px !important;
+    padding-right: 16px !important
+}
+
+.zero-margin-top {
+    margin-top: 0px !important
+}
