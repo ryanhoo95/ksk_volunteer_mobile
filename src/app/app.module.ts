@@ -16,6 +16,7 @@ import { ActiveParticipationPage } from '../pages/active-participation/active-pa
 import { PendingInvitationPage } from '../pages/pending-invitation/pending-invitation';
 import { HistoryPage } from '../pages/history/history';
 import { AboutPage } from '../pages/about/about';
+import { TermsPage } from '../pages/terms/terms';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -36,7 +37,8 @@ import { IonicStorageModule } from '@ionic/storage';
     ActiveParticipationPage,
     PendingInvitationPage,
     HistoryPage,
-    AboutPage
+    AboutPage,
+    TermsPage
   ],
   imports: [
     BrowserModule,
@@ -58,7 +60,8 @@ import { IonicStorageModule } from '@ionic/storage';
     ActiveParticipationPage,
     PendingInvitationPage,
     HistoryPage,
-    AboutPage
+    AboutPage,
+    TermsPage
   ],
   providers: [
     StatusBar,

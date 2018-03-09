@@ -20,7 +20,11 @@
 // }
 
 .button {
-    text-transform: unset
+    text-transform: unset !important
+}
+
+.alert-button {
+    text-transform: unset !important
 }
 
 .common-padding {
@@ -35,4 +39,8 @@
 
 .zero-margin-top {
     margin-top: 0px !important
+}
+
+.validation-error {
+   color: red;
 }

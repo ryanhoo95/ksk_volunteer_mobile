@@ -7,6 +7,8 @@ import { HistoryPage } from '../history/history';
 import { AboutPage } from '../about/about';
 import { Storage } from '@ionic/storage';
 import { LoginPage } from '../login/login';
+import { KskProvider } from '../../providers/ksk/ksk';
+import { AlertController } from 'ionic-angular';
 
 /**
  * Generated class for the VolunteerMorePage page.
@@ -22,7 +24,9 @@ import { LoginPage } from '../login/login';
 })
 export class VolunteerMorePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage, private app: App) {
+  params: any;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage, private app: App, private kskProvider: KskProvider, private alertCtrl: AlertController) {
   }
 
   ionViewDidLoad() {
@@ -54,9 +58,47 @@ export class VolunteerMorePage {
     // this.navCtrl.push(LoginPage);
     // this.navCtrl.setRoot(LoginPage);
 
-    this.storage.clear();
+    //this.storage.clear();
 
-    this.app.getRootNav().setRoot(LoginPage);
+    
+
+    let dialog = this.alertCtrl.create({
+      title: "Logout",
+      message: "Are you sure to logout?",
+      buttons: [
+        {
+          text: "NO"
+        },
+
+        {
+          text: "YES",
+          handler: () => {
+            this.kskProvider.getSessionData("token").then((val) => {
+              this.params = {
+                "api_token" : val
+              };
+
+              this.kskProvider.postData(this.params, "logout").then((result) => {
+                let response: any = result;
+                console.log(response);
+  
+                if(response.status == "success") {
+                  this.kskProvider.clearSessionData();
+                  this.app.getRootNav().setRoot(LoginPage);
+                }
+                else {
+                  this.kskProvider.showAlertDialog("Logout Fail", response.message);
+                }
+                
+              }, (err) => {
+                this.kskProvider.showServerErrorDialog();
+              });
+            })
+          }
+        }
+      ]
+    });
+    dialog.present();
   }
 
 }

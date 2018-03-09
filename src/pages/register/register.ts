@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { KskProvider } from '../../providers/ksk/ksk';
+import { TermsPage } from '../terms/terms';
 
 /**
  * Generated class for the RegisterPage page.
@@ -15,11 +17,28 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class RegisterPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  public type = "password";
+  public showPass = false;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private kskProvider: KskProvider) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad RegisterPage');
+  }
+
+  showPassword() {
+    this.showPass = !this.showPass;
+ 
+    if(this.showPass){
+      this.type = "text";
+    } else {
+      this.type = "password";
+    }
+  }
+
+  terms() {
+    this.navCtrl.push(TermsPage)
   }
 
 }

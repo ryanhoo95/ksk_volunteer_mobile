@@ -10,17 +10,25 @@
       <ion-input type="email" [formControl]="loginForm.controls['email']"></ion-input>
     </ion-item>
 
+    <div *ngIf="!loginForm.controls.email.valid && loginForm.controls.email.dirty" class="validation-error common-padding"> 
+      *Please enter a valid email.
+    </div>
+
     <ion-item class="common-padding">
       <ion-label floating>Password</ion-label>
       <ion-input type="password" [formControl]="loginForm.controls['password']"></ion-input>
     </ion-item>
+
+    <div *ngIf="!loginForm.controls.password.valid && loginForm.controls.password.dirty" class="validation-error common-padding"> 
+      *Please enter password.
+    </div>
 
     <br>
     <br>
 
     <ion-row>
       <ion-col text-center>
-        <button ion-button block (click)="onLogin()">Login</button>
+        <button ion-button block [disabled]="!loginForm.valid" (click)="onLogin()">Login</button>
       </ion-col>
     </ion-row>
 

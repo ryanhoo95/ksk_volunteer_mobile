@@ -16,7 +16,10 @@
 
     <ion-item class="common-padding">
       <ion-label stacked >Password</ion-label>
-      <ion-input type="Password" ></ion-input>
+      <ion-input type="{{type}}"></ion-input>
+
+      <button *ngIf="!showPass" ion-button clear color="dark" class="toggle-margin" type="button" item-right (click)="showPassword()"> <ion-icon name="ios-eye-off"></ion-icon></button>
+      <button *ngIf="showPass" ion-button clear color="dark" class="toggle-margin" type="button" item-right (click)="showPassword()"> <ion-icon name="ios-eye"></ion-icon></button>
     </ion-item>
 
     <ion-item class="common-padding">
@@ -115,7 +118,7 @@
       </ion-col>
 
       <ion-col col-10>
-        I have read and understand the terms and conditions.
+        I have read and understood the <span class="t-and-d" (click)="terms()">terms and conditions</span>.
       </ion-col>
     </ion-row>
 

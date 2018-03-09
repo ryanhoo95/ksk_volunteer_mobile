@@ -8,6 +8,7 @@ import { KskProvider } from '../../providers/ksk/ksk';
 })
 export class HomePage {
   users: any;
+  token: any;
 
   constructor(public navCtrl: NavController, private kskProvider: KskProvider) {
 
@@ -17,6 +18,13 @@ export class HomePage {
     this.kskProvider.getUser().subscribe(user => {
       console.log(user)
     });
+
+    this.token = this.kskProvider.getSessionData("token").then((val) => {
+      console.log(val);
+    });
+    
+
+
   }
 
 }
