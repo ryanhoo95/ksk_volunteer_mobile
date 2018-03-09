@@ -59,9 +59,7 @@ export class VolunteerMorePage {
     // this.navCtrl.setRoot(LoginPage);
 
     //this.storage.clear();
-
     
-
     let dialog = this.alertCtrl.create({
       title: "Logout",
       message: "Are you sure to logout?",

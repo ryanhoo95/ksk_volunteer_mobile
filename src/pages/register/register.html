@@ -7,128 +7,241 @@
 </ion-header>
 
 <ion-content padding>
-    <p class="common-padding"><b>Login Credential</b></p>
+    <form [formGroup]="registerForm">
+      <p class="common-padding"><b>Login Credential</b></p>
 
-    <ion-item class="common-padding">
-      <ion-label stacked >Email</ion-label>
-      <ion-input type="Email" ></ion-input>
-    </ion-item>
+      <!-- email -->
+      <ion-item class="common-padding">
+        <ion-label stacked >Email</ion-label>
+        <ion-input type="Email" [formControl]="registerForm.controls['email']" maxLength="100"></ion-input>
+      </ion-item>
 
-    <ion-item class="common-padding">
-      <ion-label stacked >Password</ion-label>
-      <ion-input type="{{type}}"></ion-input>
+      <div *ngIf="!registerForm.controls.email.valid && registerForm.controls.email.dirty" class="validation-error common-padding"> 
+        *Please enter a valid email.
+      </div>
+  
+      <!-- password -->
+      <ion-item class="common-padding">
+        <ion-label stacked >Password</ion-label>
+        <ion-input type="{{type}}" [formControl]="registerForm.controls['password']" maxLength="20"></ion-input>
+  
+        <button *ngIf="!showPass" ion-button clear color="dark" class="toggle-margin" type="button" item-right (click)="showPassword()"> <ion-icon name="ios-eye-off"></ion-icon></button>
+        <button *ngIf="showPass" ion-button clear color="dark" class="toggle-margin" type="button" item-right (click)="showPassword()"> <ion-icon name="ios-eye"></ion-icon></button>
+      </ion-item>
 
-      <button *ngIf="!showPass" ion-button clear color="dark" class="toggle-margin" type="button" item-right (click)="showPassword()"> <ion-icon name="ios-eye-off"></ion-icon></button>
-      <button *ngIf="showPass" ion-button clear color="dark" class="toggle-margin" type="button" item-right (click)="showPassword()"> <ion-icon name="ios-eye"></ion-icon></button>
-    </ion-item>
+      <div *ngIf="!registerForm.controls.password.valid && registerForm.controls.password.dirty" class="validation-error common-padding"> 
+        *Please enter a valid password (at least 8 characters).
+      </div>
+  
+      <!-- password confirmation -->
+      <ion-item class="common-padding">
+        <ion-label stacked >Confirm Password</ion-label>
+        <ion-input type="Password" [formControl]="registerForm.controls['password_confirmation']" maxLength="20"></ion-input>
+      </ion-item>
 
-    <ion-item class="common-padding">
-      <ion-label stacked >Confirm Password</ion-label>
-      <ion-input type="Password" ></ion-input>
-    </ion-item>
+      <div *ngIf="!registerForm.controls.password_confirmation.valid && registerForm.controls.password_confirmation.dirty" class="validation-error common-padding"> 
+        *Password mismatched.
+      </div>
+  
+      <br>
+  
+      <p class="common-padding"><b>Profile</b></p>
+  
+      <!-- full name -->
+      <ion-item class="common-padding">
+        <ion-label stacked >Full Name</ion-label>
+        <ion-input type="text" [formControl]="registerForm.controls['full_name']" maxLength="100"></ion-input>
+      </ion-item>
 
-    <br>
+      <div *ngIf="!registerForm.controls.full_name.valid && registerForm.controls.full_name.dirty" class="validation-error common-padding"> 
+        *This field is required.
+      </div>
+  
+      <!-- profile name -->
+      <ion-item class="common-padding">
+        <ion-label stacked >Profile Name</ion-label>
+        <ion-input type="text" [formControl]="registerForm.controls['profile_name']" maxLength="100"></ion-input>
+      </ion-item>
 
-    <p class="common-padding"><b>Profile</b></p>
+      <div *ngIf="!registerForm.controls.profile_name.valid && registerForm.controls.profile_name.dirty" class="validation-error common-padding"> 
+        *This field is required.
+      </div>
+  
+      <!-- gender -->
+      <ion-item class="common-padding">
+        <ion-label stacked>Gender</ion-label>
+        <ion-select [formControl]="registerForm.controls['gender']">
+          <ion-option value="M" selected="true">Male</ion-option>
+          <ion-option value="F" >Female</ion-option>
+        </ion-select>
+      </ion-item>
 
-    <ion-item class="common-padding">
-      <ion-label stacked >Full Name</ion-label>
-      <ion-input type="text" ></ion-input>
-    </ion-item>
+      <div *ngIf="!registerForm.controls.gender.valid && registerForm.controls.gender.dirty" class="validation-error common-padding"> 
+        *This field is required.
+      </div>
+  
+      <!-- ic passport -->
+      <ion-item class="common-padding">
+        <ion-label stacked >IC / Passport No.</ion-label>
+        <ion-input type="text" [formControl]="registerForm.controls['ic_passport']" maxLength="20"></ion-input>
+      </ion-item>
 
-    <ion-item class="common-padding">
-      <ion-label stacked >Profile Name</ion-label>
-      <ion-input type="text" ></ion-input>
-    </ion-item>
+      <div *ngIf="!registerForm.controls.ic_passport.valid && registerForm.controls.ic_passport.dirty" class="validation-error common-padding"> 
+        *This field is required.
+      </div>
+      
+      <!-- dob -->
+      <ion-item class="common-padding">
+        <ion-label stacked>Date of Birth</ion-label>
+        <ion-datetime displayFormat="DD MMM YYYY" pickerFormat="DD MMM YYYY" [formControl]="registerForm.controls['date_of_birth']"></ion-datetime>
+      </ion-item>
 
-    <ion-item class="common-padding">
-      <ion-label stacked>Gender</ion-label>
-      <ion-select>
-        <ion-option value="M" selected="true">Male</ion-option>
-        <ion-option value="F" >Female</ion-option>
-      </ion-select>
-    </ion-item>
+      <div *ngIf="!registerForm.controls.date_of_birth.valid && registerForm.controls.date_of_birth.dirty" class="validation-error common-padding"> 
+        *This field is required.
+      </div>
+  
+      <!-- phone no -->
+      <ion-item class="common-padding">
+        <ion-label stacked>Phone No.</ion-label>
+        <ion-input type="tel" [formControl]="registerForm.controls['phone_no']" maxLength="20"></ion-input>
+      </ion-item>
 
-    <ion-item class="common-padding">
-      <ion-label stacked >IC / Passport No.</ion-label>
-      <ion-input type="text" ></ion-input>
-    </ion-item>
+      <div *ngIf="!registerForm.controls.phone_no.valid && registerForm.controls.phone_no.dirty" class="validation-error common-padding"> 
+        *This field is required.
+      </div>
+  
+      <!-- address -->
+      <ion-item class="common-padding">
+        <ion-label stacked>Address</ion-label>
+        <ion-input type="text" [formControl]="registerForm.controls['address']" maxLength="255"></ion-input>
+      </ion-item>
+
+      <div *ngIf="!registerForm.controls.address.valid && registerForm.controls.address.dirty" class="validation-error common-padding"> 
+        *This field is required.
+      </div>
+  
+      <br>
+  
+      <p class="common-padding"><b>Emergency Contact</b></p>
+  
+      <!-- emergency contact -->
+      <ion-item class="common-padding">
+        <ion-label stacked >Phone No.</ion-label>
+        <ion-input type="tel" [formControl]="registerForm.controls['emergency_contact']" maxLength="20"></ion-input>
+      </ion-item>
+
+      <div *ngIf="!registerForm.controls.emergency_contact.valid && registerForm.controls.emergency_contact.dirty" class="validation-error common-padding"> 
+        *This field is required.
+      </div>
+  
+      <!-- emergency name -->
+      <ion-item class="common-padding">
+        <ion-label stacked >Name</ion-label>
+        <ion-input type="text" [formControl]="registerForm.controls['emergency_name']" maxLength="100"></ion-input>
+      </ion-item>
+
+      <div *ngIf="!registerForm.controls.emergency_name.valid && registerForm.controls.emergency_name.dirty" class="validation-error common-padding"> 
+        *This field is required.
+      </div>
+  
+      <!-- emergency relation -->
+      <ion-item class="common-padding">
+        <ion-label stacked >Relation</ion-label>
+        <ion-input type="text" placeholder="Eg: Father" [formControl]="registerForm.controls['emergency_relation']" maxLength="100"></ion-input>
+      </ion-item>
+
+      <div *ngIf="!registerForm.controls.emergency_relation.valid && registerForm.controls.emergency_relation.dirty" class="validation-error common-padding"> 
+        *This field is required.
+      </div>
+  
+      <br>
+  
+      <p class="common-padding"><b>Survey</b></p>
+  
+      <!-- occupation -->
+      <ion-item class="common-padding">
+        <ion-label stacked>Occupation</ion-label>
+        <ion-select [formControl]="registerForm.controls['occupation']" (ionChange)="occupationChanged()">
+          <ion-option value="1" >Arts and Entertainment</ion-option>
+          <ion-option value="2" >Business</ion-option>
+          <ion-option value="3" >Engineering</ion-option>
+          <ion-option value="4" >Finance</ion-option>
+          <ion-option value="5" >Healthcare and Medicine</ion-option>
+          <ion-option value="6" >Industrial and Manufacturing</ion-option>
+          <ion-option value="7" >Information Technology</ion-option>
+          <ion-option value="8" >Law Enforcement and Armed Forces</ion-option>
+          <ion-option value="9" >Service</ion-option>
+          <ion-option value="10" selected="true">Student</ion-option>
+          <ion-option value="11" >Unemployed</ion-option>
+          <ion-option value="12" >Other</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <div *ngIf="!registerForm.controls.occupation.valid && registerForm.controls.occupation.dirty" class="validation-error common-padding"> 
+        *This field is required.
+      </div>
+
+      <!-- occupation remark -->
+      <ion-item *ngIf="showOccupationRemark" class="common-padding">
+        <ion-label stacked >Remark</ion-label>
+        <ion-input type="text" [formControl]="registerForm.controls['occupation_remark']" maxLength="100"></ion-input>
+      </ion-item>
+
+      <div *ngIf="!registerForm.controls.occupation_remark.valid && registerForm.controls.occupation_remark.dirty" class="validation-error common-padding"> 
+        *This field is required.
+      </div>
+  
+      <!-- medium -->
+      <ion-item class="common-padding">
+        <ion-label stacked>How did you get to know about Kechara Soup Kitchen Society</ion-label>
+        <ion-select [formControl]="registerForm.controls['medium']" (ionChange)="mediumChanged()">
+          <ion-option value="1" selected="true">Via friend or family members</ion-option>
+          <ion-option value="2" >Via my company's CSR programme</ion-option>
+          <ion-option value="3" >Via printed media / news / radio / TV Programmes</ion-option>
+          <ion-option value="4" >Via social media platform</ion-option>
+          <ion-option value="5" >Via googling or online search</ion-option>
+          <ion-option value="6" >Via another soup kitchen</ion-option>
+          <ion-option value="7" >Other</ion-option>
+        </ion-select>
+        <ion-input type="text" [hidden]="true"></ion-input>
+      </ion-item>
+
+      <div *ngIf="!registerForm.controls.medium.valid && registerForm.controls.medium.dirty" class="validation-error common-padding"> 
+        *This field is required.
+      </div>
+
+      <!-- medium remark -->
+      <ion-item *ngIf="showMediumRemark" class="common-padding">
+        <ion-label stacked >Remark</ion-label>
+        <ion-input type="text" [formControl]="registerForm.controls['medium_remark']" maxLength="100"></ion-input>
+      </ion-item>
+
+      <div *ngIf="!registerForm.controls.medium_remark.valid && registerForm.controls.medium_remark.dirty" class="validation-error common-padding"> 
+        *This field is required.
+      </div>
+  
+      <br>
+      <ion-row class="common-padding-right">
+        <ion-col col-2>
+          <ion-item>
+            <ion-checkbox class="zero-margin-top" checked="false" [formControl]="registerForm.controls['terms']"></ion-checkbox>
+          </ion-item>
+        </ion-col>
+  
+        <ion-col col-10>
+          I have read and understood the <span class="t-and-d" (click)="terms()">terms and conditions</span>.
+        </ion-col>
+      </ion-row>
+  
+      <br>
+  
+      <ion-row>
+        <ion-col text-center>
+          <button ion-button block [disabled]="!registerForm.valid" (click)="onRegister()">Register</button>
+        </ion-col>
+      </ion-row>
+
+    </form>
     
-    <ion-item class="common-padding">
-      <ion-label stacked>Date of Birth</ion-label>
-      <ion-datetime displayFormat="DD MMM YYYY" pickerFormat="DD MMM YYYY"></ion-datetime>
-    </ion-item>
-
-    <ion-item class="common-padding">
-      <ion-label stacked>Phone No.</ion-label>
-      <ion-input type="tel" ></ion-input>
-    </ion-item>
-
-    <ion-item class="common-padding">
-      <ion-label stacked>Address</ion-label>
-      <ion-input type="text" ></ion-input>
-    </ion-item>
-
-    <br>
-
-    <p class="common-padding"><b>Emergency Contact</b></p>
-
-    <ion-item class="common-padding">
-      <ion-label stacked >Phone No.</ion-label>
-      <ion-input type="tel" ></ion-input>
-    </ion-item>
-
-    <ion-item class="common-padding">
-      <ion-label stacked >Name</ion-label>
-      <ion-input type="text" ></ion-input>
-    </ion-item>
-
-    <ion-item class="common-padding">
-      <ion-label stacked >Relation</ion-label>
-      <ion-input type="text" placeholder="Eg: Father"></ion-input>
-    </ion-item>
-
-    <br>
-
-    <p class="common-padding"><b>Survey</b></p>
-
-    <ion-item class="common-padding">
-      <ion-label stacked>Occupation</ion-label>
-      <ion-select>
-        <ion-option value="1" selected="true">Student</ion-option>
-        <ion-option value="2" >Government</ion-option>
-      </ion-select>
-    </ion-item>
-
-    <ion-item class="common-padding">
-      <ion-label stacked>How you get know to Kechara Soup Kitchen</ion-label>
-      <ion-select>
-        <ion-option value="1" selected="true">Social Media</ion-option>
-        <ion-option value="2" >Magazine</ion-option>
-      </ion-select>
-      <ion-input type="text" [hidden]="true"></ion-input>
-    </ion-item>
-
-    <br>
-    <ion-row class="common-padding-right">
-      <ion-col col-2>
-        <ion-item>
-          <ion-checkbox class="zero-margin-top" checked="false" ></ion-checkbox>
-        </ion-item>
-      </ion-col>
-
-      <ion-col col-10>
-        I have read and understood the <span class="t-and-d" (click)="terms()">terms and conditions</span>.
-      </ion-col>
-    </ion-row>
-
-    <br>
-
-    <ion-row>
-      <ion-col text-center>
-        <button ion-button block>Register</button>
-      </ion-col>
-    </ion-row>
-
     <br>
 </ion-content>
