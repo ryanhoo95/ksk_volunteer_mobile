@@ -12,6 +12,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { VolunteerMorePage } from '../pages/volunteer-more/volunteer-more';
 import { SearchActivityPage } from '../pages/search-activity/search-activity';
 import { VolunteerProfilePage } from '../pages/volunteer-profile/volunteer-profile';
+import { VolunteerProfileEditPage } from '../pages/volunteer-profile-edit/volunteer-profile-edit';
 import { ActiveParticipationPage } from '../pages/active-participation/active-participation';
 import { PendingInvitationPage } from '../pages/pending-invitation/pending-invitation';
 import { HistoryPage } from '../pages/history/history';
@@ -22,6 +23,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { KskProvider } from '../providers/ksk/ksk';
 import { IonicStorageModule } from '@ionic/storage';
+import { CallNumber } from '@ionic-native/call-number';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,7 @@ import { IonicStorageModule } from '@ionic/storage';
     VolunteerMorePage,
     SearchActivityPage,
     VolunteerProfilePage,
+    VolunteerProfileEditPage,
     ActiveParticipationPage,
     PendingInvitationPage,
     HistoryPage,
@@ -57,6 +60,7 @@ import { IonicStorageModule } from '@ionic/storage';
     VolunteerMorePage,
     SearchActivityPage,
     VolunteerProfilePage,
+    VolunteerProfileEditPage,
     ActiveParticipationPage,
     PendingInvitationPage,
     HistoryPage,
@@ -66,6 +70,7 @@ import { IonicStorageModule } from '@ionic/storage';
   providers: [
     StatusBar,
     SplashScreen,
+    CallNumber,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     KskProvider
   ]

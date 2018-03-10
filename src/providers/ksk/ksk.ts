@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import { AlertController } from 'ionic-angular';
+import { AlertController, App, LoadingController } from 'ionic-angular';
 
 /*
   Generated class for the KskProvider provider.
@@ -12,8 +12,9 @@ import { AlertController } from 'ionic-angular';
 @Injectable()
 export class KskProvider {
   url;
+  loader: any;
 
-  constructor(public http: HttpClient, private storage: Storage, private alertCtrl: AlertController) {
+  constructor(public http: HttpClient, private storage: Storage, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
     //this.url = 'http://kskvolunteer.com/api/';
     this.url = 'http://192.168.43.139/api/'
   }
@@ -106,4 +107,16 @@ export class KskProvider {
     dialog.present();
   }
 
+  showProgress() {
+    this.loader = this.loadingCtrl.create({
+      spinner: "bubbles",
+      content: "Please wait..."
+    });
+
+    this.loader.present();
+  }
+
+  dismissProgress() {
+    this.loader.dismiss();
+  }
 }

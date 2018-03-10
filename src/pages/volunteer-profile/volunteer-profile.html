@@ -2,11 +2,89 @@
 
   <ion-navbar hideBackButton>
     <ion-title>Profile</ion-title>
+    <ion-buttons end *ngIf="user">
+      <button ion-button icon-only color="light" (click)="toEditProfile()">
+        <ion-icon name="create"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
+<ion-content>
+  <ion-card *ngIf="user">
+    
+    <ion-item text-wrap>
+      <ion-avatar item-left>
+        <img src="{{user.profile_image}}" class="profile-image">
+      </ion-avatar>
+      <h1><b>{{user.profile_name}}</b></h1>
+      <small><i>Member since {{user.join_date}}</i></small>
+    </ion-item>
 
-<ion-content padding>
+    <hr>
+   
+    <!-- <ion-card-content> -->
+      <ion-list >
+        <ion-item text-wrap>
+          <ion-icon name="person" item-left></ion-icon>
+          <p>{{user.full_name}}</p>
+        </ion-item>
+
+        <ion-item text-wrap>
+          <ion-icon *ngIf="user.gender == 'Male'" name="male" item-left></ion-icon>
+          <ion-icon *ngIf="user.gender == 'Female'" name="female" item-left></ion-icon>
+          <p>{{user.gender}}</p>
+        </ion-item>
+
+        <ion-item text-wrap>
+          <ion-icon name="calendar" item-left></ion-icon>
+          <p>{{user.date_of_birth}}</p>
+        </ion-item>
+
+        <ion-item text-wrap>
+          <ion-icon name="card" item-left></ion-icon>
+          <p>{{user.ic_passport}}</p>
+        </ion-item>
+
+        <ion-item text-wrap>
+          <ion-icon name="mail" item-left></ion-icon>
+          <p>{{user.email}}</p>
+        </ion-item>
+
+        <ion-item text-wrap>
+          <ion-icon name="phone-portrait" item-left></ion-icon>
+          <p>{{user.phone_no}}</p>
+        </ion-item>
+
+        <ion-item text-wrap>
+          <ion-icon name="navigate" item-left></ion-icon>
+          <p>{{user.address}}</p>
+        </ion-item>
+      </ion-list>
+    <!-- </ion-card-content> -->
+  </ion-card>
+
+  <ion-card *ngIf="user">
+    <ion-card-header>
+      <b>Emergency Contact</b>
+    </ion-card-header>
+
+    <hr>
+
+    <!-- <ion-card-content> -->
+      <ion-list >
+        <ion-item text-wrap>
+          <ion-icon name="contact" item-left></ion-icon>
+          <p>{{user.emergency_person}}</p>
+        </ion-item>
+
+        <ion-item text-wrap (click)="callEmergencyContact(user.emergency_contact)">
+          <ion-icon name="call" item-left></ion-icon>
+          <p>{{user.emergency_contact}}</p>
+        </ion-item>
+      </ion-list>
+    <!-- </ion-card-content> -->
+  </ion-card>
 
 </ion-content>
