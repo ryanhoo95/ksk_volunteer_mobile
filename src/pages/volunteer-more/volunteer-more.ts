@@ -84,6 +84,11 @@ export class VolunteerMorePage {
                   this.kskProvider.clearSessionData();
                   this.app.getRootNav().setRoot(LoginPage);
                 }
+                else if(response.status == "invalid") {
+                  this.kskProvider.showAlertDialog("Logout Fail", response.message);
+                  this.kskProvider.clearSessionData();
+                  this.app.getRootNav().setRoot(LoginPage);
+                }
                 else {
                   this.kskProvider.showAlertDialog("Logout Fail", response.message);
                 }
