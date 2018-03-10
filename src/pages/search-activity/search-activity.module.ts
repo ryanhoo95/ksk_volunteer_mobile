@@ -9,5 +9,8 @@ import { SearchActivityPage } from './search-activity';
   imports: [
     IonicPageModule.forChild(SearchActivityPage),
   ],
+  exports: [
+    SearchActivityPage
+  ]
 })
 export class SearchActivityPageModule {}

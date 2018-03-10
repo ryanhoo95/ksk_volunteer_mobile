@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, App, Item } from 'ionic-angular';
-import { VolunteerProfileEditPage } from '../volunteer-profile-edit/volunteer-profile-edit';
 import { KskProvider } from '../../providers/ksk/ksk';
-import { LoginPage } from '../login/login';
 import { CallNumber } from '@ionic-native/call-number';
 
 /**
@@ -51,7 +49,7 @@ export class VolunteerProfilePage {
       else if(response.status == "invalid") {
         this.kskProvider.showAlertDialog("Fail", response.message);
         this.kskProvider.clearSessionData();
-        this.app.getRootNav().setRoot(LoginPage);
+        this.app.getRootNav().setRoot('LoginPage');
       }
       else {
         this.kskProvider.showAlertDialog("Fail", response.message);
@@ -63,7 +61,7 @@ export class VolunteerProfilePage {
   }
 
   toEditProfile(user) {
-    this.navCtrl.push(VolunteerProfileEditPage, {
+    this.navCtrl.push('VolunteerProfileEditPage', {
       user: user
     });
   }

@@ -9,5 +9,8 @@ import { VolunteerProfileEditPage } from './volunteer-profile-edit';
   imports: [
     IonicPageModule.forChild(VolunteerProfileEditPage),
   ],
+  exports: [
+    VolunteerProfileEditPage
+  ]
 })
 export class VolunteerProfileEditPageModule {}

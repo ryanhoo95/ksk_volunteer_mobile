@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { RegisterPage } from '../register/register';
-import { TabsPage } from '../tabs/tabs';
 import { KskProvider } from '../../providers/ksk/ksk';
 
 /**
@@ -36,10 +34,12 @@ export class LoginPage {
   }
 
   onRegister() {
-    this.navCtrl.push(RegisterPage);
+    this.navCtrl.push('RegisterPage');
   }
 
   onLogin() {
+    this.kskProvider.showProgress();
+
     let params = {
       "email" : this.loginForm.get("email").value,
       "password" : this.loginForm.get("password").value
@@ -49,10 +49,12 @@ export class LoginPage {
       let response: any = result;
       console.log(response);
 
+      this.kskProvider.dismissProgress();
+
       if(response.status == "success") {
         this.kskProvider.setSessionData('token', response.data.api_token);
-        this.navCtrl.push(TabsPage);
-        this.navCtrl.setRoot(TabsPage);
+        this.navCtrl.push('TabsPage');
+        this.navCtrl.setRoot('TabsPage');
       }
       else {
         this.kskProvider.showAlertDialog("Login Fail", response.message);

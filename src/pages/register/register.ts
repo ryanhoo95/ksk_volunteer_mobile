@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { KskProvider } from '../../providers/ksk/ksk';
-import { TermsPage } from '../terms/terms';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
-import { TabsPage } from '../tabs/tabs';
 
 /**
  * Generated class for the RegisterPage page.
@@ -81,7 +79,7 @@ export class RegisterPage {
   }
 
   terms() {
-    this.navCtrl.push(TermsPage)
+    this.navCtrl.push('TermsPage')
   }
 
   static validateTerms(AC: AbstractControl): { [key: string]: boolean } {
@@ -131,6 +129,8 @@ export class RegisterPage {
  }
 
  onRegister() {
+   this.kskProvider.showProgress();
+
    let params = {
      "email" : this.registerForm.get("email").value,
      "password" : this.registerForm.get("password").value,
@@ -154,10 +154,12 @@ export class RegisterPage {
     let response: any = result;
     console.log(response);
 
+    this.kskProvider.dismissProgress();
+
     if(response.status == "success") {
       this.kskProvider.setSessionData('token', response.data.api_token);
-      this.navCtrl.push(TabsPage);
-      this.navCtrl.setRoot(TabsPage);
+      this.navCtrl.push('TabsPage');
+      this.navCtrl.setRoot('TabsPage');
     }
     else {
       this.kskProvider.showAlertDialog("Registration Fail", response.message);

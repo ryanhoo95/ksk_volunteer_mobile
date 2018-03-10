@@ -9,5 +9,8 @@ import { ActiveParticipationPage } from './active-participation';
   imports: [
     IonicPageModule.forChild(ActiveParticipationPage),
   ],
+  exports: [
+    ActiveParticipationPage
+  ]
 })
 export class ActiveParticipationPageModule {}

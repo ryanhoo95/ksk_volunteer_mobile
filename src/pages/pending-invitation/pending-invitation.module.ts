@@ -9,5 +9,8 @@ import { PendingInvitationPage } from './pending-invitation';
   imports: [
     IonicPageModule.forChild(PendingInvitationPage),
   ],
+  exports: [
+    PendingInvitationPage
+  ]
 })
 export class PendingInvitationPageModule {}

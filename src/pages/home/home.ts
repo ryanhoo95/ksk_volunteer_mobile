@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
+import { IonicPage } from 'ionic-angular';
 import { NavController } from 'ionic-angular';
 import { KskProvider } from '../../providers/ksk/ksk';
 
+@IonicPage()
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
