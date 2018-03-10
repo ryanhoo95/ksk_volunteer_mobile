@@ -61,6 +61,7 @@ export class LoginPage {
       }
 
     }, (err) => {
+      this.kskProvider.dismissProgress();
       this.kskProvider.showServerErrorDialog();
     });
   }

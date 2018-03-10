@@ -90,6 +90,7 @@ export class VolunteerMorePage {
                 }
                 
               }, (err) => {
+                this.kskProvider.dismissProgress();
                 this.kskProvider.showServerErrorDialog();
               });
             })

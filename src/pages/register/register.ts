@@ -166,6 +166,7 @@ export class RegisterPage {
     }
 
   }, (err) => {
+    this.kskProvider.dismissProgress();
     this.kskProvider.showServerErrorDialog();
   });
  }
