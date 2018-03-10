@@ -23,8 +23,6 @@ export class HomePage {
       console.log(val);
     });
     
-
-
   }
 
 }

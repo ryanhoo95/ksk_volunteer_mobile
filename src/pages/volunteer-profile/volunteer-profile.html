@@ -3,7 +3,7 @@
   <ion-navbar hideBackButton>
     <ion-title>Profile</ion-title>
     <ion-buttons end *ngIf="user">
-      <button ion-button icon-only color="light" (click)="toEditProfile()">
+      <button ion-button icon-only color="light" (click)="toEditProfile(user)">
         <ion-icon name="create"></ion-icon>
       </button>
     </ion-buttons>
@@ -16,7 +16,7 @@
     
     <ion-item text-wrap>
       <ion-avatar item-left>
-        <img src="{{user.profile_image}}" class="profile-image">
+        <img src="{{user.profile_image}}" class="profile-image-large">
       </ion-avatar>
       <h1><b>{{user.profile_name}}</b></h1>
       <small><i>Member since {{user.join_date}}</i></small>
@@ -76,7 +76,7 @@
       <ion-list >
         <ion-item text-wrap>
           <ion-icon name="contact" item-left></ion-icon>
-          <p>{{user.emergency_person}}</p>
+          <p>{{user.emergency_name}} ({{user.emergency_relation}})</p>
         </ion-item>
 
         <ion-item text-wrap (click)="callEmergencyContact(user.emergency_contact)">

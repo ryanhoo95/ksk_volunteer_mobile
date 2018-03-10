@@ -63,7 +63,7 @@ export class RegisterPage {
 
     }, {
       validator: RegisterPage.MatchPassword
-    })
+    });
   }
 
   ionViewDidLoad() {

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, App } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, App, Item } from 'ionic-angular';
 import { VolunteerProfileEditPage } from '../volunteer-profile-edit/volunteer-profile-edit';
 import { KskProvider } from '../../providers/ksk/ksk';
 import { LoginPage } from '../login/login';
@@ -62,8 +62,10 @@ export class VolunteerProfilePage {
     })
   }
 
-  toEditProfile() {
-    this.navCtrl.push(VolunteerProfileEditPage);
+  toEditProfile(user) {
+    this.navCtrl.push(VolunteerProfileEditPage, {
+      user: user
+    });
   }
 
   callEmergencyContact(number: any) {
