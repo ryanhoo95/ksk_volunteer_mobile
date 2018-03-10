@@ -9,6 +9,10 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { KskProvider } from '../providers/ksk/ksk';
 import { IonicStorageModule } from '@ionic/storage';
 import { CallNumber } from '@ionic-native/call-number';
+import { File } from '@ionic-native/file';
+import { FileTransfer } from '@ionic-native/file-transfer';
+import { FilePath } from '@ionic-native/file-path';
+import { Camera } from '@ionic-native/camera';
 
 @NgModule({
   declarations: [
@@ -28,6 +32,10 @@ import { CallNumber } from '@ionic-native/call-number';
     StatusBar,
     SplashScreen,
     CallNumber,
+    File,
+    FileTransfer,
+    Camera,
+    FilePath,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     KskProvider
   ]

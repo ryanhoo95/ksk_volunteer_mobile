@@ -7,6 +7,20 @@
   </ion-header>
   
   <ion-content padding>
+      
+      <div class="profile-image" (click)="displayAction()">
+        <ion-item class="no-border">
+          <ion-avatar>
+            <div class="profile-image-center">
+              <img src="{{pathForImage(lastImage)}}" class="profile-image-large">
+            </div>
+          </ion-avatar>
+        </ion-item>
+        <div class="profile-image-center">
+            <ion-icon name="camera" item-right color="primary"></ion-icon>
+        </div>
+      </div>
+
       <form [formGroup]="editForm">
         <p class="common-padding"><b>Profile</b></p>
     
