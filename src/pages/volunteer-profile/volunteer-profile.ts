@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, App, Item } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, App, ActionSheetController, Platform } from 'ionic-angular';
 import { KskProvider } from '../../providers/ksk/ksk';
 import { CallNumber } from '@ionic-native/call-number';
 
@@ -19,7 +19,7 @@ export class VolunteerProfilePage {
   token: any;
   user: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private app: App, private kskProvider: KskProvider, private callNumber: CallNumber) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private app: App, private kskProvider: KskProvider, private callNumber: CallNumber, private asCtrl: ActionSheetController, private platform: Platform) {
     this.kskProvider.getSessionData("token").then((val) => {
       this.token = val;
     })
@@ -61,8 +61,43 @@ export class VolunteerProfilePage {
     })
   }
 
+  displayProfileOption(user) {
+    let actionSheet = this.asCtrl.create({
+      title: "More",
+      buttons: [
+        {
+          text: "Edit Profile",
+          icon: !this.platform.is('ios') ? 'create' : null,
+          handler: () => {
+            this.toEditProfile(user);
+          }
+        },
+        {
+          text: "Reset Password",
+          icon: !this.platform.is('ios') ? 'lock' : null,
+          handler: () => {
+            this.toResetPassword(user);
+          }
+        },
+        {
+          text: "Cancel",
+          icon: !this.platform.is('ios') ? 'close' : null,
+          role: "cancel"
+        }
+      ]
+    });
+
+    actionSheet.present();
+  }
+
   toEditProfile(user) {
     this.navCtrl.push('VolunteerProfileEditPage', {
+      user: user
+    });
+  }
+
+  toResetPassword(user) {
+    this.navCtrl.push('ResetPasswordPage', {
       user: user
     });
   }
