@@ -126,7 +126,7 @@ export class RegisterPage {
                 console.log("API error: " + err);
                 resolve(null);
             });
-        }, 100);
+        }, 500);
     });
     return promise;
   }
@@ -151,7 +151,7 @@ export class RegisterPage {
                 console.log("API error: " + err);
                 resolve(null);
             });
-        }, 100);
+        }, 500);
     });
     return promise;
   }
