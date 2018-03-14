@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ActionSheetController, Platform, ToastController, LoadingController, Loading } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ActionSheetController, Platform, ToastController, LoadingController, Loading, App } from 'ionic-angular';
 import { KskProvider } from '../../providers/ksk/ksk';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Camera } from '@ionic-native/camera';
@@ -25,12 +25,11 @@ export class VolunteerProfileEditPage {
   editForm: FormGroup;
   genderVal: any;
   lastImage: string = null;
-  loading: Loading;
   needUploadImage: Boolean = false;
   imageFileName: String = null;
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private kskProvider: KskProvider, private formBuilder: FormBuilder, private asCtrl: ActionSheetController, private camera: Camera, private platform: Platform, private file: File, private transfer: FileTransfer, private filePath: FilePath, private toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private kskProvider: KskProvider, private formBuilder: FormBuilder, private asCtrl: ActionSheetController, private camera: Camera, private platform: Platform, private file: File, private transfer: FileTransfer, private filePath: FilePath, private toastCtrl: ToastController, private app: App) {
     this.kskProvider.getSessionData("token").then((val) => {
       this.token = val;
     })
@@ -162,12 +161,15 @@ export class VolunteerProfileEditPage {
   public onSave() {
     if(this.lastImage != null) {
       this.needUploadImage = true;
-      this.uploadImage();
+      this.imageFileName = this.user.user_id + "_" + this.lastImage;
+      //this.uploadImage();
     }
     else {
       this.needUploadImage = false;
-      this.saveEdit();
+      this.imageFileName = "null";
+      //this.saveEdit();
     }
+    this.saveEdit();
   }
 
   public uploadImage() {
@@ -179,7 +181,6 @@ export class VolunteerProfileEditPage {
 
     //file name only
     let filename: any = this.lastImage;
-    this.imageFileName = this.user.user_id + "_" + this.lastImage;
 
     let options: FileUploadOptions = {
       fileKey: "profile_image",
@@ -195,23 +196,66 @@ export class VolunteerProfileEditPage {
     
     const fileTransfer: FileTransferObject = this.transfer.create();
 
-    this.kskProvider.showProgress();
-
     fileTransfer.upload(targetPath, url, options).then((result) => {
       this.kskProvider.dismissProgress();
+      this.kskProvider.showAlertDialog("Success", "Profile is updated.");
+      this.navCtrl.pop();
 
-      this.kskProvider.showAlertDialog("success", "done upload");
+      //this.kskProvider.showAlertDialog("success", "done upload");
       //this.saveEdit();
     }, (err) => {
       this.kskProvider.dismissProgress();
-      //this.kskProvider.showServerErrorDialog();
-      console.log(err);
-      this.kskProvider.showAlertDialog("Error", JSON.stringify(err))
+      this.kskProvider.showServerErrorDialog();
+      // console.log(err);
+      // this.kskProvider.showAlertDialog("Error", JSON.stringify(err))
     });
   }
 
   public saveEdit() {
+    this.kskProvider.showProgress();
 
+    let params = {
+      "api_token" : this.token,
+      "full_name" : this.editForm.get("full_name").value,
+      "profile_name" : this.editForm.get("profile_name").value,
+      "gender" : this.editForm.get("gender").value,
+      "date_of_birth" : this.editForm.get("date_of_birth").value,
+      "phone_no" : this.editForm.get("phone_no").value,
+      "address" : this.editForm.get("address").value,
+      "emergency_contact" : this.editForm.get("emergency_contact").value,
+      "emergency_name" : this.editForm.get("emergency_name").value,
+      "emergency_relation" : this.editForm.get("emergency_relation").value,
+      "profile_image" : this.imageFileName
+    };
+    
+    this.kskProvider.postData(params, "updateVolunteerProfile").then((result) => {
+      let response: any = result;
+
+      if(response.status == "success") {
+        if(this.needUploadImage) {
+          this.uploadImage();
+        }
+        else {
+          this.kskProvider.dismissProgress();
+          this.kskProvider.showAlertDialog("Success", response.message);
+          this.navCtrl.pop();
+        }
+      }
+      else if(response.status == "invalid") {
+        this.kskProvider.dismissProgress();
+        this.kskProvider.showAlertDialog("Fail", response.message);
+        this.kskProvider.clearSessionData();
+        this.app.getRootNav().setRoot('LoginPage');
+      }
+      else {
+        this.kskProvider.dismissProgress();
+        this.kskProvider.showAlertDialog("Fail", response.message);
+      }
+
+    }, (err) => {
+      this.kskProvider.dismissProgress();
+      this.kskProvider.showServerErrorDialog();
+    });
   }
 
 }
