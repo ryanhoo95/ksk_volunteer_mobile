@@ -30,7 +30,7 @@ export class RegisterPage {
       email: ['', Validators.compose([
         Validators.required,
         Validators.email
-      ])],
+      ]),  this.checkUniqueEmail.bind(this)],
       
       password: ['', Validators.compose([
         Validators.required,
@@ -46,7 +46,7 @@ export class RegisterPage {
       full_name: ['', Validators.required],
       profile_name: ['', Validators.required],
       gender: ['M', Validators.required],
-      ic_passport: ['', Validators.required],
+      ic_passport: ['', Validators.required, this.checkUniqueICPassport.bind(this)],
       date_of_birth: ['', Validators.required],
       phone_no: ['', Validators.required],
       address: ['', Validators.required],
@@ -68,6 +68,7 @@ export class RegisterPage {
     console.log('ionViewDidLoad RegisterPage');
   }
 
+  //show the password
   showPassword() {
     this.showPass = !this.showPass;
  
@@ -78,10 +79,12 @@ export class RegisterPage {
     }
   }
 
+  //go to terms and conditions page
   terms() {
     this.navCtrl.push('TermsPage')
   }
 
+  //check whether the checkbox for t & d is checked
   static validateTerms(AC: AbstractControl): { [key: string]: boolean } {
     let rv: { [key: string]: boolean } = {};
     if (!AC.value) {
@@ -90,6 +93,7 @@ export class RegisterPage {
     return rv;
   }
 
+  //check if the password are matching
   static MatchPassword(AC: AbstractControl) {
     let password = AC.get('password').value; // to get value in input tag
     let password_confirmation = AC.get('password_confirmation').value; // to get value in input tag
@@ -100,75 +104,128 @@ export class RegisterPage {
         //  console.log('true');
          return null
      }
- }
-
- occupationChanged() {
-   if(this.registerForm.get("occupation").value == "12") {
-     this.showOccupationRemark = true;
-     this.registerForm.get("occupation_remark").setValidators(Validators.required);
-   }
-   else {
-     this.showOccupationRemark = false;
-     this.registerForm.get("occupation_remark").clearValidators();
-     this.registerForm.get("occupation_remark").clearAsyncValidators();
-     this.registerForm.get("occupation_remark").updateValueAndValidity();
-   }
- }
-
- mediumChanged() {
-  if(this.registerForm.get("medium").value == "7") {
-    this.showMediumRemark = true;
-    this.registerForm.get("medium_remark").setValidators(Validators.required);
   }
-  else {
-    this.showMediumRemark = false;
-    this.registerForm.get("medium_remark").clearValidators();
-    this.registerForm.get("medium_remark").clearAsyncValidators();
-    this.registerForm.get("medium_remark").updateValueAndValidity();
+
+  //check for unique email
+  checkUniqueEmail(AC: AbstractControl): Promise<any> {
+    const promise = new Promise<any>((resolve, reject)=>{
+        setTimeout(()=>{
+            let params = {
+              "email": AC.value 
+            };
+            this.kskProvider.postData(params, "checkUniqueEmail").then((result) => {
+                let response: any = result;
+                console.log(response);
+
+                if(response.status == "fail")
+                    resolve({ 'unique' : true });
+                else
+                    resolve(null);
+            },
+            (err) => {
+                console.log("API error: " + err);
+                resolve(null);
+            });
+        }, 100);
+    });
+    return promise;
   }
- }
 
- onRegister() {
-   this.kskProvider.showProgress();
+  //check for unique ic passport
+  checkUniqueICPassport(AC: AbstractControl): Promise<any> {
+    const promise = new Promise<any>((resolve, reject)=>{
+        setTimeout(()=>{
+            let params = {
+              "ic_passport": AC.value 
+            };
+            this.kskProvider.postData(params, "checkUniqueICPassport").then((result) => {
+                let response: any = result;
+                console.log(response);
 
-   let params = {
-     "email" : this.registerForm.get("email").value,
-     "password" : this.registerForm.get("password").value,
-     "full_name" : this.registerForm.get("full_name").value,
-     "profile_name" : this.registerForm.get("profile_name").value,
-     "gender" : this.registerForm.get("gender").value,
-     "ic_passport" : this.registerForm.get("ic_passport").value,
-     "date_of_birth" : this.registerForm.get("date_of_birth").value,
-     "phone_no" : this.registerForm.get("phone_no").value,
-     "address" : this.registerForm.get("address").value,
-     "emergency_contact" : this.registerForm.get("emergency_contact").value,
-     "emergency_name" : this.registerForm.get("emergency_name").value,
-     "emergency_relation" : this.registerForm.get("emergency_relation").value,
-     "occupation" : this.registerForm.get("occupation").value,
-     "occupation_remark" : this.registerForm.get("occupation_remark").value,
-     "medium" : this.registerForm.get("medium").value,
-     "medium_remark" : this.registerForm.get("medium_remark").value,
-   };
+                if(response.status == "fail")
+                    resolve({ 'unique' : true });
+                else
+                    resolve(null);
+            },
+            (err) => {
+                console.log("API error: " + err);
+                resolve(null);
+            });
+        }, 100);
+    });
+    return promise;
+  }
 
-   this.kskProvider.postData(params, "register").then((result) => {
-    let response: any = result;
-    console.log(response);
-
-    this.kskProvider.dismissProgress();
-
-    if(response.status == "success") {
-      this.kskProvider.setSessionData('token', response.data.api_token);
-      this.navCtrl.push('TabsPage');
-      this.navCtrl.setRoot('TabsPage');
+  //show input when other is selected
+  occupationChanged() {
+    if(this.registerForm.get("occupation").value == "12") {
+      this.showOccupationRemark = true;
+      this.registerForm.get("occupation_remark").setValidators(Validators.required);
     }
     else {
-      this.kskProvider.showAlertDialog("Registration Fail", response.message);
+      this.showOccupationRemark = false;
+      this.registerForm.get("occupation_remark").clearValidators();
+      this.registerForm.get("occupation_remark").clearAsyncValidators();
+      this.registerForm.get("occupation_remark").updateValueAndValidity();
     }
+  }
 
-  }, (err) => {
-    this.kskProvider.dismissProgress();
-    this.kskProvider.showServerErrorDialog();
-  });
- }
+  //show input when other is selected
+  mediumChanged() {
+    if(this.registerForm.get("medium").value == "7") {
+      this.showMediumRemark = true;
+      this.registerForm.get("medium_remark").setValidators(Validators.required);
+    }
+    else {
+      this.showMediumRemark = false;
+      this.registerForm.get("medium_remark").clearValidators();
+      this.registerForm.get("medium_remark").clearAsyncValidators();
+      this.registerForm.get("medium_remark").updateValueAndValidity();
+    }
+  }
+
+  //register the user
+  onRegister() {
+    this.kskProvider.showProgress();
+
+    let params = {
+      "email" : this.registerForm.get("email").value,
+      "password" : this.registerForm.get("password").value,
+      "full_name" : this.registerForm.get("full_name").value,
+      "profile_name" : this.registerForm.get("profile_name").value,
+      "gender" : this.registerForm.get("gender").value,
+      "ic_passport" : this.registerForm.get("ic_passport").value,
+      "date_of_birth" : this.registerForm.get("date_of_birth").value,
+      "phone_no" : this.registerForm.get("phone_no").value,
+      "address" : this.registerForm.get("address").value,
+      "emergency_contact" : this.registerForm.get("emergency_contact").value,
+      "emergency_name" : this.registerForm.get("emergency_name").value,
+      "emergency_relation" : this.registerForm.get("emergency_relation").value,
+      "occupation" : this.registerForm.get("occupation").value,
+      "occupation_remark" : this.registerForm.get("occupation_remark").value,
+      "medium" : this.registerForm.get("medium").value,
+      "medium_remark" : this.registerForm.get("medium_remark").value,
+    };
+
+    this.kskProvider.postData(params, "register").then((result) => {
+      let response: any = result;
+      console.log(response);
+
+      this.kskProvider.dismissProgress();
+
+      if(response.status == "success") {
+        this.kskProvider.setSessionData('token', response.data.api_token);
+        this.navCtrl.push('TabsPage');
+        this.navCtrl.setRoot('TabsPage');
+      }
+      else {
+        this.kskProvider.showAlertDialog("Registration Fail", response.message);
+      }
+
+    }, (err) => {
+      this.kskProvider.dismissProgress();
+      this.kskProvider.showServerErrorDialog();
+    });
+  }
 
 }

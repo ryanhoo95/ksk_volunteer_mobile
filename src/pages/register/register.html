@@ -16,7 +16,10 @@
         <ion-input type="Email" [formControl]="registerForm.controls['email']" maxLength="100"></ion-input>
       </ion-item>
 
-      <div *ngIf="!registerForm.controls.email.valid && registerForm.controls.email.dirty" class="validation-error common-padding"> 
+      <div *ngIf="registerForm.get('email').errors?.unique" class="validation-error common-padding">
+        *This email is already taken
+      </div>
+      <div *ngIf="!registerForm.get('email').errors?.unique && !registerForm.controls.email.valid && registerForm.controls.email.dirty" class="validation-error common-padding"> 
         *Please enter a valid email.
       </div>
   
@@ -86,7 +89,11 @@
         <ion-input type="text" [formControl]="registerForm.controls['ic_passport']" maxLength="20"></ion-input>
       </ion-item>
 
-      <div *ngIf="!registerForm.controls.ic_passport.valid && registerForm.controls.ic_passport.dirty" class="validation-error common-padding"> 
+      <div *ngIf="registerForm.get('ic_passport').errors?.unique" class="validation-error common-padding">
+        *This IC / Passport no. is already taken.
+      </div>
+
+      <div *ngIf="!registerForm.get('ic_passport').errors?.unique && !registerForm.controls.ic_passport.valid && registerForm.controls.ic_passport.dirty" class="validation-error common-padding"> 
         *This field is required.
       </div>
       
