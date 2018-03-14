@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, App } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { KskProvider } from '../../providers/ksk/ksk';
 
@@ -23,9 +23,14 @@ export class ResetPasswordPage {
   showCurrentPass = false;
   type = "password";
   showPass = false;
+  token: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder, private kskProvider: KskProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder, private kskProvider: KskProvider, private app: App) {
     this.user = navParams.get('user');
+
+    this.kskProvider.getSessionData("token").then((val) => {
+      this.token = val;
+    })
 
     this.resetPasswordForm = this.formBuilder.group({
       current_password: ['', Validators.compose([
@@ -86,8 +91,37 @@ export class ResetPasswordPage {
      }
  }
 
- onResetPassword() {
-   
- }
+  onResetPassword() {
+    this.kskProvider.showProgress();
+    
+    let params = {
+      "api_token" : this.token,
+      "current_password" : this.resetPasswordForm.get('current_password').value,
+      "new_password" : this.resetPasswordForm.get('password').value 
+    };
+
+    this.kskProvider.postData(params, "resetPassword").then((result) => {
+      let response: any = result;
+
+      this.kskProvider.dismissProgress();
+
+      if(response.status == "success") {
+        this.kskProvider.showAlertDialog("Success", response.message);
+        this.navCtrl.pop();
+      }
+      else if(response.status == "invalid") {
+        this.kskProvider.showAlertDialog("Fail", response.message);
+        this.kskProvider.clearSessionData();
+        this.app.getRootNav().setRoot('LoginPage');
+      }
+      else {
+        this.kskProvider.showAlertDialog("Fail", response.message);
+      }
+
+    }, (err) => {
+      this.kskProvider.dismissProgress();
+      this.kskProvider.showServerErrorDialog();
+    });
+  }
 
 }

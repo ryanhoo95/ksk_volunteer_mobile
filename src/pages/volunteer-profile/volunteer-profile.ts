@@ -58,7 +58,7 @@ export class VolunteerProfilePage {
     }, (err) => {
       this.kskProvider.dismissProgress();
       this.kskProvider.showServerErrorDialog();
-    })
+    });
   }
 
   displayProfileOption(user) {
