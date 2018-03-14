@@ -66,4 +66,8 @@ export class LoginPage {
     });
   }
 
+  forgotPassword() {
+    this.kskProvider.showAlertDialog("Forgot Password", "You may contact administrator to reset the password.")
+  }
+
 }
