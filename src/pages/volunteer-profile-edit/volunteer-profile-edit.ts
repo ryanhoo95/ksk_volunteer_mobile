@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams, ActionSheetController, Platform, T
 import { KskProvider } from '../../providers/ksk/ksk';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Camera } from '@ionic-native/camera';
-import { FileTransfer } from '@ionic-native/file-transfer';
+import { FileTransfer, FileTransferObject, FileUploadOptions } from '@ionic-native/file-transfer';
 import { FilePath } from '@ionic-native/file-path';
 import { File } from '@ionic-native/file';
 
@@ -20,13 +20,21 @@ import { File } from '@ionic-native/file';
   templateUrl: 'volunteer-profile-edit.html',
 })
 export class VolunteerProfileEditPage {
-  user: any
+  user: any;
+  token: any;
   editForm: FormGroup;
   genderVal: any;
   lastImage: string = null;
   loading: Loading;
+  needUploadImage: Boolean = false;
+  imageFileName: String = null;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private kskProvider: KskProvider, private formBuilder: FormBuilder, private asCtrl: ActionSheetController, private camera: Camera, private platform: Platform, private file: File, private transfer: FileTransfer, private filePath: FilePath, private toastCtrl: ToastController, private loadingCtrl: LoadingController) {
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private kskProvider: KskProvider, private formBuilder: FormBuilder, private asCtrl: ActionSheetController, private camera: Camera, private platform: Platform, private file: File, private transfer: FileTransfer, private filePath: FilePath, private toastCtrl: ToastController) {
+    this.kskProvider.getSessionData("token").then((val) => {
+      this.token = val;
+    })
+
     this.user = navParams.get('user');
 
     if(this.user.gender == "Male") {
@@ -52,10 +60,6 @@ export class VolunteerProfileEditPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad VolunteerProfileEditPage');
-  }
-
-  onSave() {
-    
   }
 
   displayAction() {
@@ -92,12 +96,12 @@ export class VolunteerProfileEditPage {
   public takePicture(sourceType) {
     // Create options for the Camera Dialog
     var options = {
-      quality: 20,
+      quality: 80,
       sourceType: sourceType,
       saveToPhotoAlbum: false,
       correctOrientation: true,
-      targetWidth: 200,
-      targetHeight: 200
+      targetWidth: 500,
+      targetHeight: 500
     };
    
     // Get the data of an image
@@ -140,7 +144,7 @@ export class VolunteerProfileEditPage {
   private presentToast(text) {
     let toast = this.toastCtrl.create({
       message: text,
-      duration: 3000,
+      duration: 2000,
       position: 'top'
     });
     toast.present();
@@ -153,6 +157,61 @@ export class VolunteerProfileEditPage {
     } else {
       return this.file.dataDirectory + img;
     }
+  }
+
+  public onSave() {
+    if(this.lastImage != null) {
+      this.needUploadImage = true;
+      this.uploadImage();
+    }
+    else {
+      this.needUploadImage = false;
+      this.saveEdit();
+    }
+  }
+
+  public uploadImage() {
+    //destination url
+    let url = this.kskProvider.url + "uploadProfileImage";
+
+    //file for uplaod
+    let targetPath = this.pathForImage(this.lastImage);
+
+    //file name only
+    let filename: any = this.lastImage;
+    this.imageFileName = this.user.user_id + "_" + this.lastImage;
+
+    let options: FileUploadOptions = {
+      fileKey: "profile_image",
+      fileName: filename,
+      chunkedMode: false,
+      mimeType: "multipart/form-data",
+      params: {
+        'file_name' : this.imageFileName,
+      },
+      httpMethod: 'POST'
+    };
+    
+    
+    const fileTransfer: FileTransferObject = this.transfer.create();
+
+    this.kskProvider.showProgress();
+
+    fileTransfer.upload(targetPath, url, options).then((result) => {
+      this.kskProvider.dismissProgress();
+
+      this.kskProvider.showAlertDialog("success", "done upload");
+      //this.saveEdit();
+    }, (err) => {
+      this.kskProvider.dismissProgress();
+      //this.kskProvider.showServerErrorDialog();
+      console.log(err);
+      this.kskProvider.showAlertDialog("Error", JSON.stringify(err))
+    });
+  }
+
+  public saveEdit() {
+
   }
 
 }
