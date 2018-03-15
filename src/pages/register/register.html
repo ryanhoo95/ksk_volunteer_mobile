@@ -199,12 +199,12 @@
       </div>
   
       <!-- medium -->
-      <ion-item class="common-padding">
+      <ion-item class="common-padding justify" text-wrap>
         <ion-label stacked>How did you get to know about Kechara Soup Kitchen Society</ion-label>
-        <ion-select [formControl]="registerForm.controls['medium']" (ionChange)="mediumChanged()">
+        <ion-select [formControl]="registerForm.controls['medium']" (ionChange)="mediumChanged()"p>
           <ion-option value="1" selected="true">Via friend or family members</ion-option>
           <ion-option value="2" >Via my company's CSR programme</ion-option>
-          <ion-option value="3" >Via printed media / news / radio / TV Programmes</ion-option>
+          <ion-option value="3" text-wra>Via printed media / news / radio / TV Programmes</ion-option>
           <ion-option value="4" >Via social media platform</ion-option>
           <ion-option value="5" >Via googling or online search</ion-option>
           <ion-option value="6" >Via another soup kitchen</ion-option>
@@ -235,7 +235,7 @@
           </ion-item>
         </ion-col>
   
-        <ion-col col-10>
+        <ion-col col-10 class="justify">
           I have read and understood the <span class="t-and-d" (click)="terms()">terms and conditions</span>.
         </ion-col>
       </ion-row>
