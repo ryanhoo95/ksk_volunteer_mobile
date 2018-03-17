@@ -53,8 +53,12 @@ export class HomePage {
     });
   }
 
-  viewActivity(todayActivity) {
-    console.log(todayActivity.activity_id);
+  viewActivity(activity) {
+    console.log(activity.activity_id);
+
+    this.navCtrl.push('ActivityDetailsPage', {
+      activity: activity
+    });
   }
 
 }

@@ -62,30 +62,30 @@
 
 // for participation response & status
 .None {
-    color: brown;
+    color: brown !important;
 }
 
 .Absent {
-    color: red;
+    color: red !important;
 }
 
 .Present {
-    color: green;
+    color: green !important;
 }
 
 .Join {
-    color: green;
+    color: green !important;
 }
 
 .Withdraw {
-    color: brown;
+    color: brown !important;
 }
 
 .Full {
-    color: red;
+    color: red !important;
 }
 
 .Available {
-    color: green;
+    color: green !important;
 }
 //end for participation response & status
