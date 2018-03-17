@@ -2,11 +2,31 @@
 
   <ion-navbar hideBackButton>
     <ion-title>Active Participation</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only color="light" (click)="getActiveParticipations()">
+        <ion-icon name="refresh"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+    <p *ngIf="participations && participations.length == 0">
+      No active participation at the moment.
+    </p>
+
+    <ion-list *ngIf="participations && participations.length > 0">
+      <ion-item *ngFor="let participation of participations" [style.display]="participation.display" (click)="viewActivity(participation)" >
+        <h2><b>{{participation.activity_title}}</b></h2>
+        <p>Date: {{participation.activity_date}}</p>
+        <p>Time: {{participation.start_time}} - {{participation.end_time}}</p>
+        <ion-icon name="people" item-right></ion-icon>
+        <ion-note item-right class="{{participation.participation_status}}">
+          {{participation.participation_num}}/{{participation.slot}}
+        </ion-note>
+      </ion-item>
+    </ion-list>
 
 </ion-content>
