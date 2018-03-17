@@ -1,14 +1,31 @@
 <ion-header>
   <ion-navbar>
     <ion-title>Home</ion-title>
+    <ion-buttons end>
+        <button ion-button icon-only color="light" (click)="getTodayActivities()">
+          <ion-icon name="refresh"></ion-icon>
+        </button>
+      </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
   <h3>Today's Activities</h3>
-  <p>
+  <p *ngIf="todayActivities && todayActivities.length == 0">
     No activity at the moment.
   </p>
+
+  <ion-list *ngIf="todayActivities && todayActivities.length > 0">
+    <ion-item *ngFor="let todayActivity of todayActivities" (click)="viewActivity(todayActivity)" >
+      <h2><b>{{todayActivity.activity_title}}</b></h2>
+      <p>Time: {{todayActivity.start_time}} - {{todayActivity.end_time}}</p>
+      <p>My response: <span class="{{todayActivity.response}}">{{todayActivity.response}}</span></p>
+      <ion-icon name="people" item-right></ion-icon>
+      <ion-note item-right class="{{todayActivity.participation_status}}">
+        {{todayActivity.participation_num}}/{{todayActivity.slot}}
+      </ion-note>
+    </ion-item>
+  </ion-list>
 
   <!-- <img src="http://192.168.43.139/storage/profile_image/IMG_20170224_091759_1519458806.jpg" alt=""> -->
 </ion-content>

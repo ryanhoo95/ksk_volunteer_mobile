@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage } from 'ionic-angular';
+import { IonicPage, App } from 'ionic-angular';
 import { NavController } from 'ionic-angular';
 import { KskProvider } from '../../providers/ksk/ksk';
 
@@ -9,22 +9,52 @@ import { KskProvider } from '../../providers/ksk/ksk';
   templateUrl: 'home.html'
 })
 export class HomePage {
-  users: any;
   token: any;
+  todayActivities: any = null;
 
-  constructor(public navCtrl: NavController, private kskProvider: KskProvider) {
-
+  constructor(public navCtrl: NavController, private kskProvider: KskProvider, private app: App) {
+    this.kskProvider.getSessionData("token").then((val) => {
+      this.token = val;
+      console.log(this.token);
+    });
   }
 
-  ionViewWillEnter() {
-    this.kskProvider.getUser().subscribe(user => {
-      console.log(user)
-    });
+  ionViewDidEnter() {
+    //get today activities
+    this.getTodayActivities();
+  }
 
-    this.token = this.kskProvider.getSessionData("token").then((val) => {
-      console.log(val);
+  getTodayActivities() {
+    this.kskProvider.showProgress();
+
+    let params = {
+      "api_token" : this.token 
+    };
+
+    this.kskProvider.postData(params, "getTodayActivities").then((result) => {
+      let response: any = result;
+      console.log(response);
+      this.kskProvider.dismissProgress();
+
+      if(response.status == "success") {
+        this.todayActivities = response.data;
+      }
+      else if(response.status == "invalid") {
+        this.kskProvider.showAlertDialog("Fail", response.message);
+        this.kskProvider.clearSessionData();
+        this.app.getRootNav().setRoot('LoginPage');
+      }
+      else {
+        this.kskProvider.showAlertDialog("Fail", response.message);
+      }
+    }, (err) => {
+      this.kskProvider.dismissProgress();
+      this.kskProvider.showServerErrorDialog();
     });
-    
+  }
+
+  viewActivity(todayActivity) {
+    console.log(todayActivity.activity_id);
   }
 
 }
