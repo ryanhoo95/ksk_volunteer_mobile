@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, App } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, App, AlertController } from 'ionic-angular';
 import { KskProvider } from '../../providers/ksk/ksk';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
@@ -21,7 +21,7 @@ export class InvitePage {
   volunteers: any;
   activity: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private kskProvider: KskProvider, private app: App, private formBuilder: FormBuilder) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private kskProvider: KskProvider, private app: App, private formBuilder: FormBuilder, private alertCtrl: AlertController) {
     this.kskProvider.getSessionData("token").then((val) => {
       this.token = val;
     });
@@ -73,6 +73,60 @@ export class InvitePage {
 
   confirmInvite(volunteer) {
     console.log("confirm? " + volunteer.profile_name);
+
+    let dialog = this.alertCtrl.create({
+      title: this.activity.activity_title,
+      message: "Are you confirm to invite " + volunteer.full_name + " to join this activity?",
+      buttons: [
+        {
+          text: "NO"
+        },
+
+        {
+          text: "YES",
+          handler: () => {
+            this.sendInvitation(volunteer);
+          }
+        }
+      ]
+    });
+    dialog.present();
+  }
+
+  sendInvitation(volunteer) {
+    this.kskProvider.showProgress();
+
+    let params = {
+      "api_token" : this.token,
+      "activity_id" : this.activity.activity_id,
+      "target_to" : volunteer.user_id,
+      "invitation_code" : this.activity.invitation_code,
+      "full_name" : volunteer.full_name
+    };
+
+    this.kskProvider.postData(params, "sendInvitation").then((result) => {
+      let response: any = result;
+      console.log(response);
+
+      this.kskProvider.dismissProgress();
+
+      if(response.status == "success") {
+        this.kskProvider.showAlertDialog("Success", response.message);
+        this.searchVolunteers();
+      }
+      else if(response.status == "invalid") {
+        this.kskProvider.showAlertDialog("Fail", response.message);
+        this.kskProvider.clearSessionData();
+        this.app.getRootNav().setRoot('LoginPage');
+      }
+      else {
+        this.kskProvider.showAlertDialog("Fail", response.message);
+      }
+
+    }, (err) => {
+      this.kskProvider.dismissProgress();
+      this.kskProvider.showServerErrorDialog();
+    });
   }
 
 }
