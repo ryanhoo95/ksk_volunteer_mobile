@@ -53,7 +53,7 @@ export class LoginPage {
 
       if(response.status == "success") {
         this.kskProvider.setSessionData('token', response.data.api_token);
-        this.navCtrl.push('TabsPage');
+        // this.navCtrl.push('TabsPage');
         this.navCtrl.setRoot('TabsPage');
       }
       else {
