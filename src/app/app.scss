@@ -55,6 +55,12 @@
     object-fit: cover;
 }
 
+.profile-image-medium {
+    width: 60px !important;
+    height: 60px !important;
+    object-fit: cover;
+}
+
 .justify {
     text-align: justify;
     text-justify: inter-word
