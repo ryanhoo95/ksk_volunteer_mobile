@@ -187,6 +187,10 @@ export class ActivityDetailsPage {
 
   invite(activity) {
     console.log("invite" + activity.activity_id);
+
+    this.navCtrl.push('InvitePage', {
+      activity: activity
+    });
   }
 
 }

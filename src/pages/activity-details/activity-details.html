@@ -61,7 +61,7 @@
     </ion-card-header> -->
     <ion-item>
       <b class="text-primary">My Group</b>
-      <button *ngIf="activity.participation_status == 'Available'" ion-button clear item-right (click)="invite(activity)">
+      <button *ngIf="activity.participation_status == 'Available' && activity.action != 'None'" ion-button clear item-right (click)="invite(activity)">
         <ion-icon name="person-add"></ion-icon>
       </button>
     </ion-item>

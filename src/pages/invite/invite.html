@@ -1,0 +1,45 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Invite</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <form [formGroup]="searchForm">
+    <div class="search-volunteer">
+      <ion-row>
+        <ion-col col-9 >
+          <ion-item no-lines text-wrap>
+            <ion-icon name="person" item-left></ion-icon>
+            <ion-input type="text" placeholder="Name" [formControl]="searchForm.controls['name']"></ion-input>
+          </ion-item>
+        </ion-col>
+  
+        <ion-col col-3>
+          <ion-item no-lines>
+            <ion-icon name="search" color="primary" item-right (click)="searchVolunteers()"></ion-icon>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </div>
+  </form>
+
+  <p *ngIf="volunteers && volunteers.length == 0">Users not found.</p>
+  
+  <ion-list *ngIf="volunteers && volunteers.length > 0">
+    <br>
+    <ion-item *ngFor="let volunteer of volunteers" text-wrap>
+      <ion-avatar item-left>
+        <img src="{{volunteer.profile_image}}">
+      </ion-avatar>
+      <b>{{volunteer.profile_name}}</b>
+      <p>{{volunteer.full_name}}</p>
+      <ion-note item-right class="Available" *ngIf="volunteer.invite_status != 'None'">{{volunteer.invite_status}}</ion-note>
+      <ion-icon *ngIf="volunteer.invite_status == 'None'" name="send" item-right (click)="confirmInvite(volunteer)"></ion-icon>
+    </ion-item>
+  </ion-list>
+
+</ion-content>
