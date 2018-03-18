@@ -18,7 +18,7 @@
     </p>
 
     <ion-list *ngIf="participations && participations.length > 0">
-      <ion-item *ngFor="let participation of participations" [style.display]="participation.display" (click)="viewActivity(participation)" >
+      <ion-item *ngFor="let participation of participations" (click)="viewActivity(participation)" >
         <h2><b>{{participation.activity_title}}</b></h2>
         <p>Date: {{participation.activity_date}}</p>
         <p>Time: {{participation.start_time}} - {{participation.end_time}}</p>
