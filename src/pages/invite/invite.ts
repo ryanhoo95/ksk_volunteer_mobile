@@ -121,6 +121,7 @@ export class InvitePage {
       }
       else {
         this.kskProvider.showAlertDialog("Fail", response.message);
+        this.searchVolunteers();
       }
 
     }, (err) => {
