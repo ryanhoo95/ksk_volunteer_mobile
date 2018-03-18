@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, App } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, App, AlertController } from 'ionic-angular';
 import { KskProvider } from '../../providers/ksk/ksk';
 
 /**
@@ -18,7 +18,7 @@ export class ActivityDetailsPage {
   token: any;
   activity: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private kskProvider: KskProvider, private app: App) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private kskProvider: KskProvider, private app: App, private alertCtrl: AlertController) {
     this.kskProvider.getSessionData("token").then((val) => {
       this.token = val;
     });
@@ -33,10 +33,42 @@ export class ActivityDetailsPage {
 
   doResponse(action) {
     if(action == "Join") {
-      this.joinActivity();
+      let dialog = this.alertCtrl.create({
+        title: this.activity.activity_title,
+        message: "Are you confirm to join this activity?",
+        buttons: [
+          {
+            text: "NO"
+          },
+
+          {
+            text: "YES",
+            handler: () => {
+              this.joinActivity();
+            }
+          }
+        ]
+      });
+      dialog.present();
     }
     else if(action == "Withdraw") {
-      this.withdrawActivity();
+      let dialog = this.alertCtrl.create({
+        title: this.activity.activity_title,
+        message: "Are you confirm to withdraw from this activity?",
+        buttons: [
+          {
+            text: "NO"
+          },
+
+          {
+            text: "YES",
+            handler: () => {
+              this.withdrawActivity();
+            }
+          }
+        ]
+      });
+      dialog.present();
     }
   }
 
