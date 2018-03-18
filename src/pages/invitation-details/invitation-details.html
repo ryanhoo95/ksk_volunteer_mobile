@@ -1,0 +1,73 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{invitation.activity_title}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <ion-card>
+    <ion-card-header color="primary">
+      <b>Details</b>
+    </ion-card-header>
+    
+
+    <ion-list >
+      <ion-item text-wrap>
+        <ion-avatar item-left>
+          <img src="{{invitation.profile_image}}" class="profile-image-medium">
+        </ion-avatar>
+
+        <b>{{invitation.profile_name}}</b>
+        <p>{{invitation.full_name}}</p>
+      </ion-item>
+
+      <ion-item text-wrap>
+        <b>Title</b>
+        <p>{{invitation.activity_title}}</p>
+      </ion-item>
+
+      <ion-item text-wrap>
+        <b>Date</b>
+        <p>{{invitation.activity_date}}</p>
+      </ion-item>
+
+      <ion-item text-wrap>
+        <b>Time</b>
+        <p>{{invitation.start_time}} - {{invitation.end_time}}</p>
+      </ion-item>
+
+      <ion-item text-wrap>
+        <b>Decription</b>
+        <p>{{invitation.description}}</p>
+      </ion-item>
+
+      <ion-item text-wrap>
+        <b>Remark</b>
+        <p>{{invitation.remark}}</p>
+      </ion-item>
+
+      <ion-item text-wrap>
+        <b>Slot</b>
+        <p class="{{invitation.participation_status}}">{{invitation.participation_num}}/{{invitation.slot}}</p>
+      </ion-item>
+
+    </ion-list>
+  </ion-card>
+
+  <ion-row class="common-padding">
+    <ion-col text-center>
+      <button ion-button block color="danger" (click)="confirmReject()">Reject</button>
+    </ion-col>
+
+    <ion-col text-center>
+      <button ion-button block color="success" (click)="confirmAccept()">Accept</button>
+    </ion-col>
+  </ion-row>
+
+  <br>
+
+</ion-content>

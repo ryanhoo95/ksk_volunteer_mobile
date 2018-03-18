@@ -54,7 +54,7 @@
     </ion-list>
   </ion-card>
 
-  <ion-card *ngIf="activity.response == 'Join'">
+  <ion-card *ngIf="activity.response == 'Join'" id="my-group">
     <!-- <ion-card-header color="primary">
       <b>My Group</b>
       <ion-icon name="people" item-right></ion-icon>
@@ -72,7 +72,11 @@
 
     <ion-list *ngIf="participants && participants.length > 0">
       <ion-item *ngFor="let participant of participants"  >
-        {{participant.profile_name}}
+        <ion-avatar item-left>
+          <img src="{{participant.profile_image}}" class="profile-image-medium">
+        </ion-avatar>
+        <b>{{participant.profile_name}}</b>
+        <p>{{participant.full_name}}</p>
       </ion-item>
     </ion-list>
   </ion-card>

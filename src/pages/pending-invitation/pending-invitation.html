@@ -2,11 +2,31 @@
 
   <ion-navbar hideBackButton>
     <ion-title>Pending Invitation</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only color="light" (click)="getPendingInvitations()">
+        <ion-icon name="refresh"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+    <p *ngIf="invitations && invitations.length == 0">
+      No pending invitation at the moment.
+    </p>
+
+    <ion-list *ngIf="invitations && invitations.length > 0">
+      <ion-item *ngFor="let invitation of invitations" (click)="viewInvitation(invitation)" >
+        <ion-avatar item-left>
+          <img src="{{invitation.profile_image}}" class="profile-image-medium">
+        </ion-avatar>
+        <h2><b>{{invitation.activity_title}}</b></h2>
+        <p>Date: {{invitation.activity_date}}</p>
+        <p>Time: {{invitation.start_time}} - {{invitation.end_time}}</p>
+        <p>Invited by: {{invitation.full_name}}</p>
+      </ion-item>
+    </ion-list>
 
 </ion-content>
