@@ -17,7 +17,7 @@
 
   <ion-list *ngIf="todayActivities && todayActivities.length > 0">
     <ion-item *ngFor="let todayActivity of todayActivities" (click)="viewActivity(todayActivity)" >
-      <h2><b>{{todayActivity.activity_title}}</b></h2>
+      <b>{{todayActivity.activity_title}}</b>
       <p>Time: {{todayActivity.start_time}} - {{todayActivity.end_time}}</p>
       <p>My response: <span class="{{todayActivity.response}}">{{todayActivity.response}}</span></p>
       <ion-icon name="people" item-right></ion-icon>
