@@ -54,6 +54,29 @@
     </ion-list>
   </ion-card>
 
+  <ion-card *ngIf="activity.response == 'Join'">
+    <!-- <ion-card-header color="primary">
+      <b>My Group</b>
+      <ion-icon name="people" item-right></ion-icon>
+    </ion-card-header> -->
+    <ion-item>
+      <b class="text-primary">My Group</b>
+      <button *ngIf="activity.participation_status == 'Available'" ion-button clear item-right (click)="invite(activity)">
+        <ion-icon name="person-add"></ion-icon>
+      </button>
+    </ion-item>
+    
+    <ion-card-content *ngIf="participants && participants.length == 0">
+      <ion-note>Empty</ion-note>
+    </ion-card-content>
+
+    <ion-list *ngIf="participants && participants.length > 0">
+      <ion-item *ngFor="let participant of participants"  >
+        {{participant.profile_name}}
+      </ion-item>
+    </ion-list>
+  </ion-card>
+
   <ion-row *ngIf="activity.action != 'None'">
     <ion-col text-center class="common-padding">
       <button ion-button block (click)="doResponse(activity.action)">{{activity.action}}</button>

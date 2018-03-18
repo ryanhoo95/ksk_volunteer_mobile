@@ -17,6 +17,7 @@ import { KskProvider } from '../../providers/ksk/ksk';
 export class ActivityDetailsPage {
   token: any;
   activity: any;
+  participants: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private kskProvider: KskProvider, private app: App, private alertCtrl: AlertController) {
     this.kskProvider.getSessionData("token").then((val) => {
@@ -24,11 +25,50 @@ export class ActivityDetailsPage {
     });
 
     this.activity = navParams.get('activity');
-    // console.log(this.activity);
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ActivityDetailsPage');
+  }
+
+  ionViewDidEnter(){
+    if(this.activity.response == "Join") {
+      this.getInvitedParticipants();
+    }
+  }
+
+  getInvitedParticipants() {
+    this.kskProvider.showProgress();
+
+    let params = {
+      "api_token" : this.token,
+      "activity_id" : this.activity.activity_id,
+      "invitation_code" : this.activity.invitation_code
+    };
+
+    this.kskProvider.postData(params, "getInvitedParticipants").then((result) => {
+      let response: any = result;
+      console.log(response);
+
+      this.kskProvider.dismissProgress();
+
+      if(response.status == "success") {
+        this.participants = response.data;
+      }
+      else if(response.status == "invalid") {
+        this.kskProvider.showAlertDialog("Fail", response.message);
+        this.kskProvider.clearSessionData();
+        this.app.getRootNav().setRoot('LoginPage');
+      }
+      else {
+        this.kskProvider.showAlertDialog("Fail", response.message);
+      }
+
+    }, (err) => {
+      this.kskProvider.dismissProgress();
+      this.kskProvider.showServerErrorDialog();
+    });
+
   }
 
   doResponse(action) {
@@ -143,6 +183,10 @@ export class ActivityDetailsPage {
       this.kskProvider.dismissProgress();
       this.kskProvider.showServerErrorDialog();
     });
+  }
+
+  invite(activity) {
+    console.log("invite" + activity.activity_id);
   }
 
 }

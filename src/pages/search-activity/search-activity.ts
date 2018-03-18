@@ -66,7 +66,7 @@ export class SearchActivityPage {
         this.refreshActivity();
       }
       else {
-      this.activities = null;
+        this.activities = null;
       }
     });
     
