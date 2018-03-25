@@ -54,7 +54,7 @@
     </ion-list>
   </ion-card>
 
-  <ion-card *ngIf="activity.response == 'Join'" id="my-group">
+  <ion-card *ngIf="activity.response == 'Join' || activity.response == 'Absent' || activity.response == 'Present'" id="my-group">
     <!-- <ion-card-header color="primary">
       <b>My Group</b>
       <ion-icon name="people" item-right></ion-icon>

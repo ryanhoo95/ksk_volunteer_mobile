@@ -2,11 +2,40 @@
 
   <ion-navbar hideBackButton>
     <ion-title>History</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only color="light" (click)="getHistory()">
+        <ion-icon name="refresh"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+  <div class="volunteer-hours">
+    <ion-item no-lines>
+      <ion-icon name="timer" item-left color="primary"></ion-icon>
+      <b class="text-primary">{{totalHours}}</b>
+      <ion-note item-right>volunteering hours</ion-note>
+    </ion-item>
+  </div>
 
+  <br>
+  <p *ngIf="histories && histories.length == 0">
+    No history at the moment.
+  </p>
+
+  <ion-list *ngIf="histories && histories.length > 0">
+    <ion-item *ngFor="let history of histories" (click)="viewHistory(history)" >
+      <b>{{history.activity_title}}</b>
+      <p>Date: {{history.activity_date}}</p>
+      <ion-icon *ngIf="history.response == 'Present'" name="thumbs-up" color="success" item-right></ion-icon>
+      <ion-icon *ngIf="history.response == 'Absent'" name="thumbs-down" color="danger" item-right></ion-icon>
+      <ion-note item-right class="{{history.response}}">
+        {{history.response}}
+      </ion-note>
+    </ion-item>
+  </ion-list>
+  
 </ion-content>

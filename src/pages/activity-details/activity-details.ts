@@ -32,7 +32,7 @@ export class ActivityDetailsPage {
   }
 
   ionViewDidEnter(){
-    if(this.activity.response == "Join") {
+    if(this.activity.response == "Join" || this.activity.response == "Absent" || this.activity.response == "Present") {
       this.getInvitedParticipants();
     }
   }
