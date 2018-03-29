@@ -1,0 +1,158 @@
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams, App } from 'ionic-angular';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { KskProvider } from '../../providers/ksk/ksk';
+
+/**
+ * Generated class for the SearchParticipationPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+
+@IonicPage()
+@Component({
+  selector: 'page-search-participation',
+  templateUrl: 'search-participation.html',
+})
+export class SearchParticipationPage {
+  today: any;
+  minDate: any;
+  searchForm: FormGroup;
+  token: any;
+  activities: any = null;
+  searchedDate: any;
+  pushed: any;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private kskProvider: KskProvider, private formBuilder: FormBuilder, private app: App) {
+    this.kskProvider.getSessionData("token").then((val) => {
+      this.token = val;
+    });
+
+    this.searchForm = this.formBuilder.group({
+      date: ['']
+    });
+  }
+
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad SearchParticipationPage');
+  }
+
+  ionViewDidLeave(){
+    console.log('ionViewDidLeave SearchParticipationPage');
+    console.log("pushed: " + this.pushed);
+    if(!this.pushed) {
+      this.kskProvider.setSessionData("searchedParticipationDate", null);
+    }
+  }
+
+  ionViewWillEnter(){
+    console.log('ionViewWillEnter SearchParticipationPage');
+    
+  }
+
+  ionViewDidEnter(){
+    console.log('ionViewDidEnter SearchParticipationPage');
+    this.pushed = false;
+    this.kskProvider.getSessionData("searchedParticipationDate").then((val) => {
+      this.searchedDate = val;
+
+      this.today = new Date().toISOString();
+      this.minDate = this.today;
+
+      if(this.searchedDate) {
+        this.today = this.searchedDate;
+        this.refreshActivity();
+      }
+      else {
+        this.activities = null;
+      }
+    });
+    
+  }
+
+  searchActivity() {
+    console.log("click");
+    console.log(this.searchForm.get('date').value);
+    this.kskProvider.setSessionData("searchedParticipationDate", this.searchForm.get('date').value);
+
+    this.kskProvider.showProgress();
+
+    let params = {
+      "api_token" : this.token,
+      "date" : this.searchForm.get("date").value
+    };
+
+    this.kskProvider.postData(params, "getParticipationsByDate").then((result) => {
+      let response: any = result;
+      console.log(response);
+
+      this.kskProvider.dismissProgress();
+
+      if(response.status == "success") {
+        this.activities = response.data;
+      }
+      else if(response.status == "invalid") {
+        this.kskProvider.showAlertDialog("Fail", response.message);
+        this.kskProvider.clearSessionData();
+        this.app.getRootNav().setRoot('LoginPage');
+      }
+      else {
+        this.kskProvider.showAlertDialog("Fail", response.message);
+      }
+
+    }, (err) => {
+      this.kskProvider.dismissProgress();
+      this.kskProvider.showServerErrorDialog();
+    });
+  }
+
+  refreshActivity() {
+
+    this.kskProvider.showProgress();
+
+    let params = {
+      "api_token" : this.token,
+      "date" : this.today
+    };
+
+    this.kskProvider.postData(params, "getParticipationsByDate").then((result) => {
+      let response: any = result;
+      console.log(response);
+
+      this.kskProvider.dismissProgress();
+
+      if(response.status == "success") {
+        this.activities = response.data;
+      }
+      else if(response.status == "invalid") {
+        this.kskProvider.showAlertDialog("Fail", response.message);
+        this.kskProvider.clearSessionData();
+        this.app.getRootNav().setRoot('LoginPage');
+      }
+      else {
+        this.kskProvider.showAlertDialog("Fail", response.message);
+      }
+
+    }, (err) => {
+      this.kskProvider.dismissProgress();
+      this.kskProvider.showServerErrorDialog();
+    });
+  }
+
+  viewActivity(activity) {
+    this.pushed = true;
+    this.navCtrl.push('ActivityDetailsPage', {
+      activity: activity
+    });
+  }
+
+  viewParticipant(activity) {
+    console.log("participant" + activity.activity_id);
+
+    this.navCtrl.push('ParticipationDetailsPage', {
+      activity: activity
+    });
+  }
+
+}

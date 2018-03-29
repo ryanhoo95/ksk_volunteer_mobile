@@ -1,0 +1,43 @@
+<ion-header>
+    <ion-navbar>
+      <ion-title>Home</ion-title>
+      <ion-buttons end>
+          <button ion-button icon-only color="light" (click)="getTodayActivities()">
+            <ion-icon name="refresh"></ion-icon>
+          </button>
+        </ion-buttons>
+    </ion-navbar>
+  </ion-header>
+
+
+<ion-content padding>
+  <h3 id="home-header">Today's Activities</h3>
+  <p *ngIf="todayActivities && todayActivities.length == 0">
+    No activity at the moment.
+  </p>
+
+  <ion-list *ngIf="todayActivities && todayActivities.length > 0">
+    <ion-item-sliding *ngFor="let todayActivity of todayActivities">
+      <ion-item >
+        <b>{{todayActivity.activity_title}}</b>
+        <p>Time: {{todayActivity.start_time}} - {{todayActivity.end_time}}</p>
+        <ion-icon name="people" item-right></ion-icon>
+        <ion-note item-right class="{{todayActivity.participation_status}}">
+          {{todayActivity.participation_num}}/{{todayActivity.slot}}
+        </ion-note>
+      </ion-item>
+
+      <ion-item-options side="right">
+        <button ion-button color="primary" (click)="viewActivity(todayActivity)">
+          <ion-icon name="information-circle"></ion-icon>
+          Details
+        </button>
+        <button ion-button color="secondary" (click)="viewParticipant(todayActivity)">
+          <ion-icon name="people"></ion-icon>
+          Participants
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+    
+  </ion-list>
+</ion-content>

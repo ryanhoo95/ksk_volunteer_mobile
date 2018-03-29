@@ -1,0 +1,59 @@
+<ion-header>
+
+    <ion-navbar>
+      <ion-title>Activity</ion-title>
+    </ion-navbar>
+  
+  </ion-header>
+  
+  
+  <ion-content padding>
+    <form [formGroup]="searchForm">
+      <div class="search-date">
+        <ion-row>
+          <ion-col col-9 >
+            <ion-item no-lines text-wrap>
+              <ion-icon name="calendar" item-left></ion-icon>
+              <ion-datetime displayFormat="DD MMM YYYY" pickerFormat="DD MMM YYYY" min="{{minDate}}" max="2025-12-31" [(ngModel)]="today" [formControl]="searchForm.controls['date']"></ion-datetime>
+              
+            </ion-item>
+          </ion-col>
+    
+          <ion-col col-3>
+            <ion-item no-lines>
+              <ion-icon name="search" color="primary" item-right (click)="searchActivity()"></ion-icon>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </div>
+    </form>
+    
+    <p *ngIf="activities && activities.length == 0">No activities found for the selected date.</p>
+  
+    <ion-list *ngIf="activities && activities.length > 0">
+      <br>
+      <ion-item-sliding *ngFor="let activity of activities">
+        <ion-item >
+          <b>{{activity.activity_title}}</b>
+          <p>Time: {{activity.start_time}} - {{activity.end_time}}</p>
+          <ion-icon name="people" item-right></ion-icon>
+          <ion-note item-right class="{{activity.participation_status}}">
+            {{activity.participation_num}}/{{activity.slot}}
+          </ion-note>
+        </ion-item>
+  
+        <ion-item-options side="right">
+          <button ion-button color="primary" (click)="viewActivity(activity)">
+            <ion-icon name="information-circle"></ion-icon>
+            Details
+          </button>
+          <button ion-button color="secondary" (click)="viewParticipant(activity)">
+            <ion-icon name="people"></ion-icon>
+            Participants
+          </button>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+  
+  </ion-content>
+  
