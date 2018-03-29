@@ -53,8 +53,14 @@ export class LoginPage {
 
       if(response.status == "success") {
         this.kskProvider.setSessionData('token', response.data.api_token);
+        this.kskProvider.setSessionData('usertype', response.data.usertype);
         // this.navCtrl.push('TabsPage');
-        this.navCtrl.setRoot('TabsPage');
+        if(response.data.usertype == "Volunteer") {
+          this.navCtrl.setRoot('TabsPage');
+        }
+        else {
+          this.navCtrl.setRoot('StaffTabsPage')
+        }
       }
       else {
         this.kskProvider.showAlertDialog("Login Fail", response.message);

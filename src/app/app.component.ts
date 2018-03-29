@@ -32,7 +32,15 @@ export class MyApp {
       
       this.kskProvider.getSessionData("token").then((val) => {
         if(val && val != null) {
-          this.rootPage = 'TabsPage';
+          this.kskProvider.getSessionData("usertype").then((val) => {
+            if(val == "Volunteer") {
+              this.rootPage = 'TabsPage';
+            }
+            else {
+              this.rootPage = 'StaffTabsPage';
+            }
+          });
+          
         }
         else {
           this.rootPage = 'LoginPage';
