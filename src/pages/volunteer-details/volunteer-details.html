@@ -1,18 +1,66 @@
-<!--
-  Generated template for the VolunteerDetailsPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
   <ion-navbar>
-    <ion-title>volunteer-details</ion-title>
+    <ion-title>{{volunteer.full_name}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
+  <ion-card *ngIf="user">
+  
+    <ion-item text-wrap>
+      <ion-avatar item-left>
+        <img src="{{volunteer.profile_image}}" class="profile-image-large">
+      </ion-avatar>
+      <h1><b>{{user.profile_name}}</b></h1>
+      <small><i>Member since {{user.created_at}}</i></small>
+    </ion-item>
 
+    <hr>
+    
+    <!-- <ion-card-content> -->
+      <ion-list >
+        <ion-item text-wrap>
+          <ion-icon *ngIf="user.gender == 'Male'" name="male" item-left></ion-icon>
+          <ion-icon *ngIf="user.gender == 'Female'" name="female" item-left></ion-icon>
+          <p>{{user.gender}}</p>
+        </ion-item>
+
+        <ion-item text-wrap>
+          <ion-icon name="card" item-left></ion-icon>
+          <p>{{volunteer.ic_passport}}</p>
+        </ion-item>
+
+        <ion-item text-wrap (click)="call(user.phone_no)">
+          <ion-icon name="phone-portrait" item-left></ion-icon>
+          <p>{{user.phone_no}}</p>
+        </ion-item>
+
+      </ion-list>
+    <!-- </ion-card-content> -->
+  </ion-card>
+
+  <ion-card *ngIf="user">
+    <ion-card-header color="primary">
+      <b>Emergency Contact</b>
+    </ion-card-header>
+
+  
+
+    <!-- <ion-card-content> -->
+      <ion-list >
+        <ion-item text-wrap>
+          <ion-icon name="contact" item-left></ion-icon>
+          <p>{{user.emergency_name}} ({{user.emergency_relation}})</p>
+        </ion-item>
+
+        <ion-item text-wrap (click)="call(user.emergency_contact)">
+          <ion-icon name="call" item-left></ion-icon>
+          <p>{{user.emergency_contact}}</p>
+        </ion-item>
+      </ion-list>
+    <!-- </ion-card-content> -->
+  </ion-card>
 </ion-content>

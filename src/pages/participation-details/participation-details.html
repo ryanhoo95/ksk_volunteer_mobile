@@ -1,0 +1,107 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Participants</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only color="light" (click)="getParticipants()">
+        <ion-icon name="refresh"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+  <h4>{{activity.activity_title}}</h4>
+  <small>{{activity.activity_date}}, {{activity.start_time}} - {{activity.end_time}}</small>
+
+  <br>
+  <br>
+
+  <h5 id="text-vip">VIP</h5>
+  <p *ngIf="vips && vips.length == 0">
+    There is no VIP for this activity.
+  </p>
+
+  <ion-list *ngIf="vips && vips.length > 0">
+    <ion-item *ngFor="let vip of vips" item-wrap >
+      <b>{{vip.participant_name}}</b>
+      <p>{{vip.participant_remark}}</p>
+    </ion-item>
+  </ion-list>
+
+  <hr>
+
+  <h5 id="text-individual">Individual</h5>
+  <p *ngIf="individuals && individuals.length == 0">
+    There is no individual participation for this activity.
+  </p>
+
+  <ion-list *ngIf="individuals && individuals.length > 0">
+    <ion-item-sliding *ngFor="let individual of individuals">
+      <ion-item (click)="viewVolunteer(individual)">
+        <ion-avatar item-left>
+          <img src="{{individual.profile_image}}" class="profile-image-medium">
+        </ion-avatar>
+        <b *ngIf="individual.category == 'Regular'">{{individual.full_name}}</b>
+        <b *ngIf="individual.category == 'Newbie'"><mark class="Withdraw">{{individual.full_name}}</mark></b>
+        <p>{{individual.ic_passport}}</p>
+        <p>Attendance: <span class="{{individual.status}}">{{individual.status}}</span></p>
+      </ion-item>
+
+      <ion-item-options *ngIf="individual.action == 'Yes'" side="right">
+        <button ion-button color="danger" (click)="absentConfirm(individual)">
+          <ion-icon name="thumbs-down"></ion-icon>
+          Absent
+        </button>
+        <button ion-button color="secondary" (click)="presentConfirm(individual)">
+          <ion-icon name="thumbs-up"></ion-icon>
+          Present
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+    
+  </ion-list>
+
+  <hr>
+
+  <h5 id="text-group">Group</h5>
+  <p *ngIf="groups && groups.length == 0">
+    There is no group participation for this activity.
+  </p>
+
+  <div *ngIf="groups && groups.length > 0">
+    <div *ngFor="let group of groups">
+      <b><u>{{group.groupName}}</u></b>
+      <ion-list>
+        <ion-item-sliding *ngFor="let member of group.members">
+          <ion-item (click)="viewVolunteer(member)">
+            <ion-avatar item-left>
+              <img src="{{member.profile_image}}" class="profile-image-medium">
+            </ion-avatar>
+            <b *ngIf="member.category == 'Regular'">{{member.full_name}}</b>
+            <b *ngIf="member.category == 'Newbie'"><mark class="Withdraw">{{member.full_name}}</mark></b>
+            <p>{{member.ic_passport}}</p>
+            <p>Attendance: <span class="{{member.status}}">{{member.status}}</span></p>
+          </ion-item>
+    
+          <ion-item-options *ngIf="member.action == 'Yes'" side="right">
+            <button ion-button color="danger" (click)="absentConfirm(member)">
+              <ion-icon name="thumbs-down"></ion-icon>
+              Absent
+            </button>
+            <button ion-button color="secondary" (click)="presentConfirm(member)">
+              <ion-icon name="thumbs-up"></ion-icon>
+              Present
+            </button>
+          </ion-item-options>
+        </ion-item-sliding>
+        
+      </ion-list>
+  
+    </div>
+  </div>
+  
+
+  
+</ion-content>
