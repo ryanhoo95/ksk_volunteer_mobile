@@ -100,7 +100,7 @@ export class KskProvider {
 
   showServerErrorDialog() {
     let dialog = this.alertCtrl.create({
-      title: "Server Error",
+      title: "Connection Error",
       message: "Please check your Internet connection and try again later.",
       buttons: ['OK']
     });
