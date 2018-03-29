@@ -149,7 +149,7 @@ export class SearchParticipationPage {
 
   viewParticipant(activity) {
     console.log("participant" + activity.activity_id);
-
+    this.pushed = true;
     this.navCtrl.push('ParticipationDetailsPage', {
       activity: activity
     });
