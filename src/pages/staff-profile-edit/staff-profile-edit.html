@@ -1,0 +1,101 @@
+<ion-header>
+
+    <ion-navbar>
+      <ion-title>Edit Profile</ion-title>
+    </ion-navbar>
+  
+  </ion-header>
+  
+  <ion-content padding>
+      
+      <div class="profile-image" (click)="displayAction()">
+        <ion-item class="no-border">
+          <ion-avatar>
+            <div class="profile-image-center">
+              <img src="{{pathForImage(lastImage)}}" class="profile-image-large">
+            </div>
+          </ion-avatar>
+        </ion-item>
+        <div class="profile-image-center">
+            <ion-icon name="camera" item-right color="primary"></ion-icon>
+        </div>
+      </div>
+
+      <form [formGroup]="editForm">
+        <p class="common-padding"><b>Profile</b></p>
+    
+        <!-- full name -->
+        <ion-item class="common-padding">
+          <ion-label stacked >Full Name</ion-label>
+          <ion-input type="text" [formControl]="editForm.controls['full_name']" maxLength="100"></ion-input>
+        </ion-item>
+  
+        <div *ngIf="!editForm.controls.full_name.valid && editForm.controls.full_name.dirty" class="validation-error common-padding"> 
+          *This field is required.
+        </div>
+    
+        <!-- profile name -->
+        <ion-item class="common-padding">
+          <ion-label stacked >Profile Name</ion-label>
+          <ion-input type="text" [formControl]="editForm.controls['profile_name']" maxLength="100"></ion-input>
+        </ion-item>
+  
+        <div *ngIf="!editForm.controls.profile_name.valid && editForm.controls.profile_name.dirty" class="validation-error common-padding"> 
+          *This field is required.
+        </div>
+    
+        <!-- gender -->
+        <ion-item class="common-padding">
+          <ion-label stacked>Gender</ion-label>
+          <ion-select [formControl]="editForm.controls['gender']">
+            <ion-option value="M" selected="true">Male</ion-option>
+            <ion-option value="F" >Female</ion-option>
+          </ion-select>
+        </ion-item>
+  
+        <div *ngIf="!editForm.controls.gender.valid && editForm.controls.gender.dirty" class="validation-error common-padding"> 
+          *This field is required.
+        </div>
+    
+        <!-- dob -->
+        <ion-item class="common-padding">
+          <ion-label stacked>Date of Birth</ion-label>
+          <ion-datetime displayFormat="DD MMM YYYY" pickerFormat="DD MMM YYYY" [(ngModel)]="user.date_of_birth_iso" [formControl]="editForm.controls['date_of_birth']"></ion-datetime>
+        </ion-item>
+  
+        <div *ngIf="!editForm.controls.date_of_birth.valid && editForm.controls.date_of_birth.dirty" class="validation-error common-padding"> 
+          *This field is required.
+        </div>
+    
+        <!-- phone no -->
+        <ion-item class="common-padding">
+          <ion-label stacked>Phone No.</ion-label>
+          <ion-input type="tel" [formControl]="editForm.controls['phone_no']" maxLength="20"></ion-input>
+        </ion-item>
+  
+        <div *ngIf="!editForm.controls.phone_no.valid && editForm.controls.phone_no.dirty" class="validation-error common-padding"> 
+          *This field is required.
+        </div>
+    
+        <!-- address -->
+        <ion-item class="common-padding">
+          <ion-label stacked>Address</ion-label>
+          <ion-input type="text" [formControl]="editForm.controls['address']" maxLength="255"></ion-input>
+        </ion-item>
+  
+        <div *ngIf="!editForm.controls.address.valid && editForm.controls.address.dirty" class="validation-error common-padding"> 
+          *This field is required.
+        </div>
+    
+        <br>
+    
+        <ion-row>
+          <ion-col text-center>
+            <button ion-button block [disabled]="!editForm.valid" (click)="onSave()">Save</button>
+          </ion-col>
+        </ion-row>
+  
+      </form>
+      
+      <br>
+  </ion-content>  

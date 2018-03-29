@@ -1,0 +1,27 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>More</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-list>
+    <ion-item (click)="toProfile()">
+      <ion-icon name="contact" item-left></ion-icon>
+      Profile
+    </ion-item>
+
+    <ion-item (click)="toAbout()">
+      <ion-icon name="information-circle" item-left></ion-icon>
+      About Us
+    </ion-item>
+
+    <ion-item (click)="logout()">
+      <ion-icon name="log-out" item-left></ion-icon>
+      Logout
+    </ion-item>
+  </ion-list>
+</ion-content>
