@@ -13,6 +13,7 @@ import { File } from '@ionic-native/file';
 import { FileTransfer } from '@ionic-native/file-transfer';
 import { FilePath } from '@ionic-native/file-path';
 import { Camera } from '@ionic-native/camera';
+import { LaunchNavigator } from '@ionic-native/launch-navigator';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { Camera } from '@ionic-native/camera';
     FileTransfer,
     Camera,
     FilePath,
+    LaunchNavigator,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     KskProvider
   ]

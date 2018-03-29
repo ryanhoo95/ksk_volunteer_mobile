@@ -7,6 +7,66 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
+  <ion-card>
+      <ion-card-header color="primary">
+        <b>Mission</b>
+      </ion-card-header>
+  
+      <ion-card-content>
+        <div class="justify">
+          <p>(1) To provide food to the marginalized community.</p>
+          <p>(2) To provide basic medical care to the marginalized community.</p>
+          <p>(3) To help the marginalized community to re-enter society by providing counseling and other relevant assistance.</p>
+        </div>
+        
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-header color="primary">
+          <b>Vission</b>
+        </ion-card-header>
+    
+        <ion-card-content>
+          <div class="justify">
+            <p>To support and complement government efforts to promote a caring Malaysia in which 
+              every individual has his/her most basic needs fulfilled and human dignity and 
+              worth respected.</p>
+          </div>
+          
+        </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+        <ion-card-header color="primary">
+            <b>Contact Info</b>
+          </ion-card-header>
+      
+          <ion-list >
+            <ion-item text-wrap (click)="navigate()">
+              <ion-icon name="compass" item-left></ion-icon>
+              <p>17, Jalan Barat (Off Jalan Imbi)
+                  Kuala Lumpur, Malaysia 55100</p>
+            </ion-item>
+    
+            <ion-item text-wrap (click)="callUs()">
+              <ion-icon name="call" item-left></ion-icon>
+              <p>03-2141 6046</p>
+            </ion-item>
+
+            <ion-item text-wrap>
+              <ion-icon name="globe" item-left></ion-icon>
+              <p>
+                <a href="http://www.kechara.com/ksk">http://www.kechara.com/ksk</a>
+              </p>
+              
+              <p>
+                <a href="https://www.facebook.com/KSKPage">https://www.facebook.com/KSKPage</a>
+              </p>
+            </ion-item>
+
+          </ion-list>
+      </ion-card>
 
 </ion-content>

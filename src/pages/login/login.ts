@@ -76,4 +76,8 @@ export class LoginPage {
     this.kskProvider.showAlertDialog("Forgot Password", "You may contact administrator to reset the password.")
   }
 
+  toAbout() {
+    this.navCtrl.push('AboutPage');
+  }
+
 }
