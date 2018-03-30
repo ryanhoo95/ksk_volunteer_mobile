@@ -37,13 +37,17 @@
       </ion-item>
 
       <ion-item text-wrap>
-        <b>Decription</b>
-        <p>{{activity.description}}</p>
+        <b>Description</b>
+        <!-- <p>{{activity.description}}</p> -->
+        <!-- <div [innerHTML]="sanitizer.bypassSecurityTrustStyle(activity.description)"></div> -->
+        <div [innerHTML]="activity.description | safe"></div>
       </ion-item>
 
       <ion-item text-wrap>
         <b>Remark</b>
-        <p>{{activity.remark}}</p>
+        <!-- <p>{{activity.remark}}</p> -->
+        <!-- <div [innerHTML]="sanitizer.bypassSecurityTrustStyle(activity.description)"></div> -->
+        <div [innerHTML]="activity.remark | safe"></div>
       </ion-item>
 
       <ion-item text-wrap>
