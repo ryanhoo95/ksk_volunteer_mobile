@@ -27,7 +27,8 @@
   <ion-list *ngIf="vips && vips.length > 0">
     <ion-item *ngFor="let vip of vips" item-wrap >
       <b>{{vip.participant_name}}</b>
-      <p>{{vip.participant_remark}}</p>
+      <!-- <p>{{vip.participant_remark}}</p> -->
+      <div [innerHTML]="vip.participant_remark | safe"></div>
     </ion-item>
   </ion-list>
 
