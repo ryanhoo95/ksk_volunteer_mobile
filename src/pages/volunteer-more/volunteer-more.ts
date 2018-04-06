@@ -46,6 +46,10 @@ export class VolunteerMorePage {
     this.navCtrl.push('AboutPage');
   }
 
+  toContact() {
+    this.navCtrl.push('ContactPage');
+  }
+
   logout() {
     // this.storage.set('login', false);
     // this.navCtrl.push(LoginPage);

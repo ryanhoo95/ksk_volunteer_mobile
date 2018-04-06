@@ -1,0 +1,47 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Contact Us</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-card>
+    <ion-list >
+      <ion-item text-wrap>
+        <ion-icon name="compass" item-left></ion-icon>
+        <p>17, Jalan Barat (Off Jalan Imbi)
+            Kuala Lumpur, Malaysia 55100</p>
+        <button ion-button color="primary" style="width: 65px" item-end  (click)="navigate()">Direction</button>
+      </ion-item>
+
+      <ion-item text-wrap>
+        <ion-icon name="call" item-left></ion-icon>
+        <p>03-2141 6046</p>
+        <button ion-button color="primary" style="width: 65px" item-end (click)="callUs()">Call</button>
+      </ion-item>
+
+      <ion-item text-wrap>
+        <ion-icon name="globe" item-left></ion-icon>
+        <p>
+          <a href="http://www.kechara.com/ksk">Website</a>
+        </p>
+        
+        <p>
+          <a href="https://www.facebook.com/KSKPage">Facebook</a>
+        </p>
+
+        <p>
+          <a href="https://www.instagram.com/kecharasoupkitchen">Instagram</a>
+        </p>
+
+        <p>
+          <a href="https://twitter.com/KecharaSoupK?s=08">Twitter</a>
+        </p>
+      </ion-item>
+
+    </ion-list>
+  </ion-card>
+</ion-content>

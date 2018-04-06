@@ -80,4 +80,8 @@ export class LoginPage {
     this.navCtrl.push('AboutPage');
   }
 
+  toContact() {
+    this.navCtrl.push('ContactPage');
+  }
+
 }
