@@ -33,9 +33,10 @@
           <p>{{volunteer.ic_passport}}</p>
         </ion-item>
 
-        <ion-item text-wrap (click)="call(user.phone_no)">
+        <ion-item text-wrap>
           <ion-icon name="phone-portrait" item-left></ion-icon>
           <p>{{user.phone_no}}</p>
+          <button ion-button color="primary" style="width: 65px" item-end (click)="call(user.phone_no)">Call</button>
         </ion-item>
 
       </ion-list>
@@ -56,9 +57,10 @@
           <p>{{user.emergency_name}} ({{user.emergency_relation}})</p>
         </ion-item>
 
-        <ion-item text-wrap (click)="call(user.emergency_contact)">
+        <ion-item text-wrap >
           <ion-icon name="call" item-left></ion-icon>
           <p>{{user.emergency_contact}}</p>
+          <button ion-button color="primary" style="width: 65px" item-end (click)="call(user.emergency_contact)">Call</button>
         </ion-item>
       </ion-list>
     <!-- </ion-card-content> -->

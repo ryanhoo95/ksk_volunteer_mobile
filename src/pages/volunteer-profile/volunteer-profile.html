@@ -79,9 +79,11 @@
           <p>{{user.emergency_name}} ({{user.emergency_relation}})</p>
         </ion-item>
 
-        <ion-item text-wrap (click)="callEmergencyContact(user.emergency_contact)">
+        <ion-item text-wrap>
           <ion-icon name="call" item-left></ion-icon>
           <p>{{user.emergency_contact}}</p>
+          <button ion-button color="primary" style="width: 65px" item-end 
+          (click)="callEmergencyContact(user.emergency_contact)">Call</button>
         </ion-item>
       </ion-list>
     <!-- </ion-card-content> -->
