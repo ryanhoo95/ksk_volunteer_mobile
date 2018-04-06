@@ -1,12 +1,16 @@
 <ion-content padding>
   <ion-fab bottom right>
-    <button ion-fab mini (click)="toAbout()"><ion-icon name="help"></ion-icon></button>
+    <button ion-fab mini ><ion-icon name="help"></ion-icon></button>
+      <ion-fab-list side="left">
+        <button ion-fab (click)="toContact()"><ion-icon name="chatbubbles"></ion-icon></button>
+        <button ion-fab (click)="toAbout()"><ion-icon name="book"></ion-icon></button>
+      </ion-fab-list>
   </ion-fab>
   
 
   <img src="assets/imgs/logoKSK.png" class="logo"/>
   <br>
-  <h3 text-center>KSK Volunteer</h3>
+  <h3 text-center>Volunteering at KSK</h3>
 
   <form [formGroup]="loginForm">
 
