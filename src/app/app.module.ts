@@ -14,6 +14,7 @@ import { FileTransfer } from '@ionic-native/file-transfer';
 import { FilePath } from '@ionic-native/file-path';
 import { Camera } from '@ionic-native/camera';
 import { LaunchNavigator } from '@ionic-native/launch-navigator';
+import { Clipboard } from '@ionic-native/clipboard';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { LaunchNavigator } from '@ionic-native/launch-navigator';
     Camera,
     FilePath,
     LaunchNavigator,
+    Clipboard,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     KskProvider
   ]

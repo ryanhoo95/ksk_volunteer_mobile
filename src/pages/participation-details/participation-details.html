@@ -45,8 +45,15 @@
         <ion-avatar item-left>
           <img src="{{individual.profile_image}}" class="profile-image-medium">
         </ion-avatar>
-        <b *ngIf="individual.category == 'Regular'">{{individual.full_name}}</b>
-        <b *ngIf="individual.category == 'Newbie'"><mark class="Withdraw">{{individual.full_name}}</mark></b>
+        <b *ngIf="individual.category == 'Regular'">
+          {{individual.full_name}}
+          &nbsp;
+          <ion-icon name="copy" color="primary" (click)="$event.stopPropagation();copyText(individual.full_name)"></ion-icon>
+        </b>
+        <b *ngIf="individual.category == 'Newbie'">
+          <mark class="Withdraw">{{individual.full_name}}</mark>
+          <ion-icon name="copy" color="primary" (click)="copyText(individual.full_name)"></ion-icon>
+        </b>
         <p>{{individual.ic_passport}}</p>
         <p>Attendance: <span class="{{individual.status}}">{{individual.status}}</span></p>
       </ion-item>
@@ -81,8 +88,16 @@
             <ion-avatar item-left>
               <img src="{{member.profile_image}}" class="profile-image-medium">
             </ion-avatar>
-            <b *ngIf="member.category == 'Regular'">{{member.full_name}}</b>
-            <b *ngIf="member.category == 'Newbie'"><mark class="Withdraw">{{member.full_name}}</mark></b>
+            <b *ngIf="member.category == 'Regular'">
+              {{member.full_name}}
+              &nbsp; 
+              <ion-icon name="copy" color="primary" (click)="$event.stopPropagation();copyText(member.full_name)"></ion-icon>
+            </b>
+            <b *ngIf="member.category == 'Newbie'">
+              <mark class="Withdraw">{{member.full_name}}</mark>
+              &nbsp;
+              <ion-icon name="copy" color="primary" (click)="$event.stopPropagation();copyText(member.full_name)"></ion-icon>
+            </b>
             <p>{{member.ic_passport}}</p>
             <p>Attendance: <span class="{{member.status}}">{{member.status}}</span></p>
           </ion-item>

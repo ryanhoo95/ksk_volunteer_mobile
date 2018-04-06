@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, App, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, App, AlertController, ToastController } from 'ionic-angular';
 import { KskProvider } from '../../providers/ksk/ksk';
+import { Clipboard } from '@ionic-native/clipboard';
 
 /**
  * Generated class for the ParticipationDetailsPage page.
@@ -22,7 +23,7 @@ export class ParticipationDetailsPage {
   groups: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private kskProvider: KskProvider, private app: App, 
-  private alertCtrl: AlertController) {
+  private alertCtrl: AlertController, private clipBoard: Clipboard, private toastCtrl: ToastController) {
     this.kskProvider.getSessionData("token").then((val) => {
       this.token = val;
     });
@@ -184,6 +185,27 @@ export class ParticipationDetailsPage {
       this.kskProvider.dismissProgress();
       this.kskProvider.showServerErrorDialog();
     });
+  }
+
+  copyText(name: string) {
+    console.log(name);
+    this.clipBoard.copy(name).then(
+      (resolve) => {
+        this.presentToast("Name is copied to clipboard.")
+      },
+      (reject) => {
+        this.presentToast("Error while copying name.")
+      }
+    );
+  }
+
+  private presentToast(text) {
+    let toast = this.toastCtrl.create({
+      message: text,
+      duration: 1500,
+      position: 'top'
+    });
+    toast.present();
   }
 
 }
