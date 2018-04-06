@@ -215,6 +215,7 @@ export class RegisterPage {
 
       if(response.status == "success") {
         this.kskProvider.setSessionData('token', response.data.api_token);
+        this.kskProvider.setSessionData('usertype', response.data.usertype);
         // this.navCtrl.push('TabsPage');
         this.navCtrl.setRoot('TabsPage');
       }
