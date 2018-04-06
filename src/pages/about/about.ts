@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { CallNumber } from '@ionic-native/call-number';
 import { KskProvider } from '../../providers/ksk/ksk';
-import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
 
 /**
  * Generated class for the AboutPage page.
@@ -18,26 +16,31 @@ import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-na
 })
 export class AboutPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private kskProvider: KskProvider, private callNumber: CallNumber, private launchnavigator: LaunchNavigator) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private kskProvider: KskProvider) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AboutPage');
   }
 
-  navigate() {
-    let options: LaunchNavigatorOptions = {
-      destinationName: "Kechara Soup Kitchen"
-    };
-
-    this.launchnavigator.navigate([3.1451213, 101.7131014,], options)
-      .catch(() => this.kskProvider.showAlertDialog("Fail", "Error while selecting navigator."));
+  toMission() {
+    this.navCtrl.push('MissionPage');
   }
 
-  callUs() {
-    this.callNumber.callNumber("03-2141 6046", false)
-      .then(() => console.log("dialing"))
-      .catch(() => this.kskProvider.showAlertDialog("Fail", "Your device does not support calling or SIM card is not present in your device."));
+  toKskHistory() {
+    this.navCtrl.push('KskHistoryPage');
+  }
+
+  toSpiritualGuide() {
+    this.navCtrl.push('SpiritualGuidePage');
+  }
+
+  toTeam() {
+    this.navCtrl.push('TeamPage');
+  }
+
+  toFacilities() {
+    this.navCtrl.push('FacilitiesPage');
   }
 
 }

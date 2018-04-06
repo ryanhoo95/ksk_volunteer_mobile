@@ -17,6 +17,7 @@ export class KskProvider {
   constructor(public http: HttpClient, private storage: Storage, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
     //this.url = 'http://kskvolunteer.com/api/';
     this.url = 'http://192.168.43.139/api/'
+    //this.url = 'http://192.168.0.102/api/'
   }
 
   getUser() {
