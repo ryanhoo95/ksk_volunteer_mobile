@@ -38,6 +38,62 @@ export class HomePage {
 
       if(response.status == "success") {
         this.todayActivities = response.data;
+        this.getTodayActivities2();
+      }
+      else if(response.status == "invalid") {
+        this.kskProvider.showAlertDialog("Fail", response.message);
+        this.kskProvider.clearSessionData();
+        this.app.getRootNav().setRoot('LoginPage');
+      }
+      else {
+        this.kskProvider.showAlertDialog("Fail", response.message);
+      }
+    }, (err) => {
+      this.kskProvider.dismissProgress();
+      this.kskProvider.showServerErrorDialog();
+    });
+  }
+
+  getTodayActivities2() {
+    let params = {
+      "api_token" : this.token 
+    };
+
+    this.kskProvider.postData(params, "getTodayActivities").then((result) => {
+      let response: any = result;
+      console.log(response);
+
+      if(response.status == "success") {
+        this.todayActivities = response.data;
+      }
+      else if(response.status == "invalid") {
+        this.kskProvider.showAlertDialog("Fail", response.message);
+        this.kskProvider.clearSessionData();
+        this.app.getRootNav().setRoot('LoginPage');
+      }
+      else {
+        this.kskProvider.showAlertDialog("Fail", response.message);
+      }
+    }, (err) => {
+      this.kskProvider.dismissProgress();
+      this.kskProvider.showServerErrorDialog();
+    });
+  }
+
+  getTodayActivities3() {
+    this.kskProvider.showProgress();
+
+    let params = {
+      "api_token" : this.token 
+    };
+
+    this.kskProvider.postData(params, "getTodayActivities").then((result) => {
+      let response: any = result;
+      console.log(response);
+      this.kskProvider.dismissProgress();
+
+      if(response.status == "success") {
+        this.todayActivities = response.data;
       }
       else if(response.status == "invalid") {
         this.kskProvider.showAlertDialog("Fail", response.message);
