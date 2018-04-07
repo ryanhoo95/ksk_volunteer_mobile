@@ -52,7 +52,7 @@
         </b>
         <b *ngIf="individual.category == 'Newbie'">
           <mark class="Withdraw">{{individual.full_name}}</mark>
-          <ion-icon name="copy" color="primary" (click)="copyText(individual.full_name)"></ion-icon>
+          <ion-icon name="copy" color="primary" (click)="$event.stopPropagation();copyText(individual.full_name)"></ion-icon>
         </b>
         <p>{{individual.ic_passport}}</p>
         <p>Attendance: <span class="{{individual.status}}">{{individual.status}}</span></p>
