@@ -231,12 +231,14 @@
       <ion-row class="common-padding-right">
         <ion-col col-2>
           <ion-item>
-            <ion-checkbox class="zero-margin-top" checked="false" [formControl]="registerForm.controls['terms']"></ion-checkbox>
+            <ion-checkbox  checked="false" [formControl]="registerForm.controls['terms']"></ion-checkbox>
           </ion-item>
         </ion-col>
   
-        <ion-col col-10 class="justify">
-          I have read and agreed the <span class="t-and-d" (click)="terms()">terms and conditions</span>.
+        <ion-col col-10 class="justify text-center">
+          <div>
+              I have read and agreed the <span class="t-and-d" (click)="terms()">terms and conditions</span>.
+          </div>
         </ion-col>
       </ion-row>
   

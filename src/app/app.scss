@@ -68,7 +68,14 @@
 
 .justify {
     text-align: justify;
-    text-justify: inter-word
+    text-justify: inter-word;
+}
+
+.text-center {
+    display: flex !important;
+    vertical-align: middle !important;
+    align-items: center;
+    align-content: center;
 }
 
 .alert-radio-label {
