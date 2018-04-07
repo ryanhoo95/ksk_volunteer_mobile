@@ -41,13 +41,20 @@
       </ion-item>
 
       <ion-item text-wrap>
+        <b>Assembly Point</b>
+        <p>{{invitation.assembly_point}}</p>
+      </ion-item>
+
+      <ion-item text-wrap>
         <b>Decription</b>
-        <p>{{invitation.description}}</p>
+        <!-- <p>{{invitation.description}}</p> -->
+        <div [innerHTML]="invitation.description | safe"></div>
       </ion-item>
 
       <ion-item text-wrap>
         <b>Remark</b>
-        <p>{{invitation.remark}}</p>
+        <!-- <p>{{invitation.remark}}</p> -->
+        <div [innerHTML]="invitation.remark | safe"></div>
       </ion-item>
 
       <ion-item text-wrap>

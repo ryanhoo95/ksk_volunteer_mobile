@@ -110,6 +110,7 @@ export class InvitationDetailsPage {
       "api_token" : this.token,
       "invitation_id" : this.invitation.invitation_id,
       "activity_id" : this.invitation.activity_id,
+      "access" : this.invitation.access,
       "invitation_code" : this.invitation.invitation_code,
       "date" : this.invitation.activity_date,
       "start_time" : this.invitation.start_time,
