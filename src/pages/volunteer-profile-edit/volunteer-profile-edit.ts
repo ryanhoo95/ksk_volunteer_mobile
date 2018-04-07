@@ -27,6 +27,7 @@ export class VolunteerProfileEditPage {
   lastImage: string = null;
   needUploadImage: Boolean = false;
   imageFileName: String = null;
+  showAllergyRemark = false;
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private kskProvider: KskProvider, private formBuilder: FormBuilder, private asCtrl: ActionSheetController, private camera: Camera, private platform: Platform, private file: File, private transfer: FileTransfer, private filePath: FilePath, private toastCtrl: ToastController, private app: App) {
@@ -43,6 +44,13 @@ export class VolunteerProfileEditPage {
       this.genderVal = "F";
     }
 
+    if(this.user.allergy == "Y") {
+      this.showAllergyRemark = true;
+    }
+    else {
+      this.showAllergyRemark = false;
+    }
+
     this.editForm = this.formBuilder.group({
       full_name: [this.user.full_name, Validators.required],
       profile_name: [this.user.profile_name, Validators.required],
@@ -50,6 +58,8 @@ export class VolunteerProfileEditPage {
       date_of_birth: ['', Validators.required],
       phone_no: [this.user.phone_no, Validators.required],
       address: [this.user.address, Validators.required],
+      allergy: [this.user.allergy, Validators.required],
+      allergy_remark: [this.user.allergy_remark],
       emergency_contact: [this.user.emergency_contact, Validators.required],
       emergency_name: [this.user.emergency_name, Validators.required],
       emergency_relation: [this.user.emergency_relation, Validators.required]
@@ -59,6 +69,20 @@ export class VolunteerProfileEditPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad VolunteerProfileEditPage');
+  }
+
+   //show input when other is selected
+   allergyChanged() {
+    if(this.editForm.get("allergy").value == "Y") {
+      this.showAllergyRemark = true;
+      this.editForm.get("allergy_remark").setValidators(Validators.required);
+    }
+    else {
+      this.showAllergyRemark = false;
+      this.editForm.get("allergy_remark").clearValidators();
+      this.editForm.get("allergy_remark").clearAsyncValidators();
+      this.editForm.get("allergy_remark").updateValueAndValidity();
+    }
   }
 
   displayAction() {
@@ -222,6 +246,8 @@ export class VolunteerProfileEditPage {
       "date_of_birth" : this.editForm.get("date_of_birth").value,
       "phone_no" : this.editForm.get("phone_no").value,
       "address" : this.editForm.get("address").value,
+      "allergy" : this.editForm.get("allergy").value,
+      "allergy_remark" : this.editForm.get("allergy_remark").value,
       "emergency_contact" : this.editForm.get("emergency_contact").value,
       "emergency_name" : this.editForm.get("emergency_name").value,
       "emergency_relation" : this.editForm.get("emergency_relation").value,

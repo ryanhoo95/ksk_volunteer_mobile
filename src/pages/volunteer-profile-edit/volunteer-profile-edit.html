@@ -86,6 +86,29 @@
         <div *ngIf="!editForm.controls.address.valid && editForm.controls.address.dirty" class="validation-error common-padding"> 
           *This field is required.
         </div>
+
+        <!-- allergy -->
+        <ion-item>
+          <ion-label stacked>Allergy / Sickness<span class="text-danger"> *</span></ion-label>
+          <ion-select [formControl]="editForm.controls['allergy']" (ionChange)="allergyChanged()">
+            <ion-option value="Y" >Yes</ion-option>
+            <ion-option value="N" >No</ion-option>          
+          </ion-select>
+        </ion-item>
+  
+        <div *ngIf="!editForm.controls.allergy.valid && editForm.controls.allergy.dirty" class="validation-error common-padding"> 
+          *This field is required.
+        </div>
+  
+         <!-- allergy remark -->
+        <ion-item *ngIf="showAllergyRemark" class="common-padding">
+          <ion-label stacked >Remark<span class="text-danger"> *</span></ion-label>
+          <ion-input type="text" [formControl]="editForm.controls['allergy_remark']" maxLength="100"></ion-input>
+        </ion-item>
+  
+        <div *ngIf="!editForm.controls.allergy_remark.valid && editForm.controls.allergy_remark.dirty" class="validation-error common-padding"> 
+          *This field is required.
+        </div>
     
         <br>
     
