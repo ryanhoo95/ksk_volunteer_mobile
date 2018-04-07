@@ -12,7 +12,7 @@
 
       <!-- email -->
       <ion-item class="common-padding">
-        <ion-label stacked >Email</ion-label>
+        <ion-label stacked >Email<span class="text-danger"> *</span></ion-label>
         <ion-input type="Email" [formControl]="registerForm.controls['email']" maxLength="100"></ion-input>
       </ion-item>
 
@@ -25,7 +25,7 @@
   
       <!-- password -->
       <ion-item class="common-padding">
-        <ion-label stacked >Password</ion-label>
+        <ion-label stacked >Password<span class="text-danger"> *</span></ion-label>
         <ion-input type="{{type}}" [formControl]="registerForm.controls['password']" maxLength="20"></ion-input>
   
         <button *ngIf="!showPass" ion-button clear color="dark" class="toggle-margin" type="button" item-right (click)="showPassword()"> <ion-icon name="ios-eye-off"></ion-icon></button>
@@ -38,7 +38,7 @@
   
       <!-- password confirmation -->
       <ion-item class="common-padding">
-        <ion-label stacked >Confirm Password</ion-label>
+        <ion-label stacked >Confirm Password<span class="text-danger"> *</span></ion-label>
         <ion-input type="{{type}}" [formControl]="registerForm.controls['password_confirmation']" maxLength="20"></ion-input>
       </ion-item>
 
@@ -52,7 +52,7 @@
   
       <!-- full name -->
       <ion-item class="common-padding">
-        <ion-label stacked >Full Name</ion-label>
+        <ion-label stacked >Full Name<span class="text-danger"> *</span></ion-label>
         <ion-input type="text" [formControl]="registerForm.controls['full_name']" maxLength="100"></ion-input>
       </ion-item>
 
@@ -62,7 +62,7 @@
   
       <!-- profile name -->
       <ion-item class="common-padding">
-        <ion-label stacked >Profile Name</ion-label>
+        <ion-label stacked >Profile Name<span class="text-danger"> *</span></ion-label>
         <ion-input type="text" [formControl]="registerForm.controls['profile_name']" maxLength="100"></ion-input>
       </ion-item>
 
@@ -72,7 +72,7 @@
   
       <!-- gender -->
       <ion-item class="common-padding">
-        <ion-label stacked>Gender</ion-label>
+        <ion-label stacked>Gender<span class="text-danger"> *</span></ion-label>
         <ion-select [formControl]="registerForm.controls['gender']">
           <ion-option value="M" selected="true">Male</ion-option>
           <ion-option value="F" >Female</ion-option>
@@ -85,7 +85,7 @@
   
       <!-- ic passport -->
       <ion-item class="common-padding">
-        <ion-label stacked >IC / Passport No.</ion-label>
+        <ion-label stacked >IC / Passport No.<span class="text-danger"> *</span></ion-label>
         <ion-input type="text" [formControl]="registerForm.controls['ic_passport']" maxLength="20"></ion-input>
       </ion-item>
 
@@ -99,7 +99,7 @@
       
       <!-- dob -->
       <ion-item class="common-padding">
-        <ion-label stacked>Date of Birth</ion-label>
+        <ion-label stacked>Date of Birth<span class="text-danger"> *</span></ion-label>
         <ion-datetime displayFormat="DD MMM YYYY" pickerFormat="DD MMM YYYY" [formControl]="registerForm.controls['date_of_birth']"></ion-datetime>
       </ion-item>
 
@@ -109,7 +109,7 @@
   
       <!-- phone no -->
       <ion-item class="common-padding">
-        <ion-label stacked>Phone No.</ion-label>
+        <ion-label stacked>Phone No.<span class="text-danger"> *</span></ion-label>
         <ion-input type="tel" [formControl]="registerForm.controls['phone_no']" maxLength="20"></ion-input>
       </ion-item>
 
@@ -119,11 +119,34 @@
   
       <!-- address -->
       <ion-item class="common-padding">
-        <ion-label stacked>Address</ion-label>
+        <ion-label stacked>Address<span class="text-danger"> *</span></ion-label>
         <ion-input type="text" [formControl]="registerForm.controls['address']" maxLength="255"></ion-input>
       </ion-item>
 
       <div *ngIf="!registerForm.controls.address.valid && registerForm.controls.address.dirty" class="validation-error common-padding"> 
+        *This field is required.
+      </div>
+
+      <!-- allergy -->
+      <ion-item>
+        <ion-label stacked>Allergy / Sickness<span class="text-danger"> *</span></ion-label>
+        <ion-select [formControl]="registerForm.controls['allergy']" (ionChange)="allergyChanged()">
+          <ion-option value="Y" >Yes</ion-option>
+          <ion-option value="N" >No</ion-option>          
+        </ion-select>
+      </ion-item>
+
+      <div *ngIf="!registerForm.controls.allergy.valid && registerForm.controls.allergy.dirty" class="validation-error common-padding"> 
+        *This field is required.
+      </div>
+
+       <!-- allergy remark -->
+       <ion-item *ngIf="showAllergyRemark" class="common-padding">
+        <ion-label stacked >Remark<span class="text-danger"> *</span></ion-label>
+        <ion-input type="text" [formControl]="registerForm.controls['allergy_remark']" maxLength="100"></ion-input>
+      </ion-item>
+
+      <div *ngIf="!registerForm.controls.allergy_remark.valid && registerForm.controls.allergy_remark.dirty" class="validation-error common-padding"> 
         *This field is required.
       </div>
   
@@ -133,7 +156,7 @@
   
       <!-- emergency contact -->
       <ion-item class="common-padding">
-        <ion-label stacked >Phone No.</ion-label>
+        <ion-label stacked >Phone No.<span class="text-danger"> *</span></ion-label>
         <ion-input type="tel" [formControl]="registerForm.controls['emergency_contact']" maxLength="20"></ion-input>
       </ion-item>
 
@@ -143,7 +166,7 @@
   
       <!-- emergency name -->
       <ion-item class="common-padding">
-        <ion-label stacked >Name</ion-label>
+        <ion-label stacked >Name<span class="text-danger"> *</span></ion-label>
         <ion-input type="text" [formControl]="registerForm.controls['emergency_name']" maxLength="100"></ion-input>
       </ion-item>
 
@@ -153,7 +176,7 @@
   
       <!-- emergency relation -->
       <ion-item class="common-padding">
-        <ion-label stacked >Relation</ion-label>
+        <ion-label stacked >Relation<span class="text-danger"> *</span></ion-label>
         <ion-input type="text" placeholder="Eg: Father" [formControl]="registerForm.controls['emergency_relation']" maxLength="100"></ion-input>
       </ion-item>
 
@@ -167,7 +190,7 @@
   
       <!-- occupation -->
       <ion-item class="common-padding">
-        <ion-label stacked>Occupation</ion-label>
+        <ion-label stacked>Occupation<span class="text-danger"> *</span></ion-label>
         <ion-select [formControl]="registerForm.controls['occupation']" (ionChange)="occupationChanged()">
           <ion-option value="1" >Arts and Entertainment</ion-option>
           <ion-option value="2" >Business</ion-option>
@@ -190,7 +213,7 @@
 
       <!-- occupation remark -->
       <ion-item *ngIf="showOccupationRemark" class="common-padding">
-        <ion-label stacked >Remark</ion-label>
+        <ion-label stacked >Remark<span class="text-danger"> *</span></ion-label>
         <ion-input type="text" [formControl]="registerForm.controls['occupation_remark']" maxLength="100"></ion-input>
       </ion-item>
 
@@ -200,7 +223,7 @@
   
       <!-- medium -->
       <ion-item class="common-padding justify" text-wrap>
-        <ion-label stacked>How did you get to know about Kechara Soup Kitchen Society</ion-label>
+        <ion-label stacked>How did you get to know about Kechara Soup Kitchen Society<span class="text-danger"> *</span></ion-label>
         <ion-select [formControl]="registerForm.controls['medium']" (ionChange)="mediumChanged()"p>
           <ion-option value="1" selected="true">Via friend or family members</ion-option>
           <ion-option value="2" >Via my company's CSR programme</ion-option>
@@ -219,7 +242,7 @@
 
       <!-- medium remark -->
       <ion-item *ngIf="showMediumRemark" class="common-padding">
-        <ion-label stacked >Remark</ion-label>
+        <ion-label stacked >Remark<span class="text-danger"> *</span></ion-label>
         <ion-input type="text" [formControl]="registerForm.controls['medium_remark']" maxLength="100"></ion-input>
       </ion-item>
 

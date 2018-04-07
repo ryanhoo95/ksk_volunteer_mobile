@@ -19,6 +19,7 @@ export class RegisterPage {
 
   type = "password";
   showPass = false;
+  showAllergyRemark = false;
   showOccupationRemark = false;
   showMediumRemark = false;
 
@@ -50,6 +51,8 @@ export class RegisterPage {
       date_of_birth: ['', Validators.required],
       phone_no: ['', Validators.required],
       address: ['', Validators.required],
+      allergy: ['N', Validators.required],
+      allergy_remark: [''],
       emergency_contact: ['', Validators.required],
       emergency_name: ['', Validators.required],
       emergency_relation: ['', Validators.required],
@@ -157,6 +160,20 @@ export class RegisterPage {
   }
 
   //show input when other is selected
+  allergyChanged() {
+    if(this.registerForm.get("allergy").value == "Y") {
+      this.showAllergyRemark = true;
+      this.registerForm.get("allergy_remark").setValidators(Validators.required);
+    }
+    else {
+      this.showAllergyRemark = false;
+      this.registerForm.get("allergy_remark").clearValidators();
+      this.registerForm.get("allergy_remark").clearAsyncValidators();
+      this.registerForm.get("allergy_remark").updateValueAndValidity();
+    }
+  }
+
+  //show input when other is selected
   occupationChanged() {
     if(this.registerForm.get("occupation").value == "12") {
       this.showOccupationRemark = true;
@@ -198,6 +215,8 @@ export class RegisterPage {
       "date_of_birth" : this.registerForm.get("date_of_birth").value,
       "phone_no" : this.registerForm.get("phone_no").value,
       "address" : this.registerForm.get("address").value,
+      "allergy" : this.registerForm.get("allergy").value,
+      "allergy_remark" : this.registerForm.get("allergy_remark").value,
       "emergency_contact" : this.registerForm.get("emergency_contact").value,
       "emergency_name" : this.registerForm.get("emergency_name").value,
       "emergency_relation" : this.registerForm.get("emergency_relation").value,
