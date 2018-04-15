@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, App } from 'ionic-angular';
 import { KskProvider } from '../../providers/ksk/ksk';
+import { CallNumber } from '@ionic-native/call-number';
 
 /**
  * Generated class for the InvitationDetailsPage page.
@@ -17,8 +18,9 @@ import { KskProvider } from '../../providers/ksk/ksk';
 export class InvitationDetailsPage {
   token: any;
   invitation: any;
+  enquiryPersons: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private kskProvider: KskProvider, private app: App, private alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private kskProvider: KskProvider, private app: App, private alertCtrl: AlertController, private callNumber: CallNumber) {
     this.kskProvider.getSessionData("token").then((val) => {
       this.token = val;
     });
@@ -28,6 +30,43 @@ export class InvitationDetailsPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad InvitationDetailsPage');
+  }
+
+  ionViewDidEnter(){
+    this.getEnquiryPersons();
+
+  }
+
+  getEnquiryPersons() {
+    this.kskProvider.showProgress();
+
+    let params = {
+      "api_token" : this.token,
+      "activity_id" : this.invitation.activity_id
+    };
+
+    this.kskProvider.postData(params, "getEnquiryPersons").then((result) => {
+      let response: any = result;
+      console.log(response);
+
+      this.kskProvider.dismissProgress();
+
+      if(response.status == "success") {
+        this.enquiryPersons = response.data;
+      }
+      else if(response.status == "invalid") {
+        this.kskProvider.showAlertDialog("Fail", response.message);
+        this.kskProvider.clearSessionData();
+        this.app.getRootNav().setRoot('LoginPage');
+      }
+      else {
+        this.kskProvider.showAlertDialog("Fail", response.message);
+      }
+
+    }, (err) => {
+      this.kskProvider.dismissProgress();
+      this.kskProvider.showServerErrorDialog();
+    });
   }
 
   confirmReject() {
@@ -141,6 +180,14 @@ export class InvitationDetailsPage {
       this.kskProvider.showServerErrorDialog();
     });
 
+  }
+
+  call(number: any) {
+    console.log(number);
+
+    this.callNumber.callNumber(number, false)
+      .then(() => console.log("dialing"))
+      .catch(() => this.kskProvider.showAlertDialog("Fail", "Your device does not support calling or SIM card is not present in your device."))
   }
 
 }

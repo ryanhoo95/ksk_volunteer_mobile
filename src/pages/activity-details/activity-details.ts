@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, App, AlertController } from 'ionic-angular';
 import { KskProvider } from '../../providers/ksk/ksk';
+import { CallNumber } from '@ionic-native/call-number';
 
 /**
  * Generated class for the ActivityDetailsPage page.
@@ -18,8 +19,9 @@ export class ActivityDetailsPage {
   token: any;
   activity: any;
   participants: any;
+  enquiryPersons: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private kskProvider: KskProvider, private app: App, private alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private kskProvider: KskProvider, private app: App, private alertCtrl: AlertController, private callNumber: CallNumber) {
     this.kskProvider.getSessionData("token").then((val) => {
       this.token = val;
     });
@@ -32,13 +34,54 @@ export class ActivityDetailsPage {
   }
 
   ionViewDidEnter(){
-    if(this.activity.response == "Join" || this.activity.response == "Absent" || this.activity.response == "Present") {
-      this.getInvitedParticipants();
-    }
+    this.getEnquiryPersons();
+
+    // if(this.activity.response == "Join" || this.activity.response == "Absent" || this.activity.response == "Present") {
+    //   this.getInvitedParticipants();
+    // }
+  }
+
+  getEnquiryPersons() {
+    this.kskProvider.showProgress();
+
+    let params = {
+      "api_token" : this.token,
+      "activity_id" : this.activity.activity_id
+    };
+
+    this.kskProvider.postData(params, "getEnquiryPersons").then((result) => {
+      let response: any = result;
+      console.log(response);
+
+      //this.kskProvider.dismissProgress();
+
+      if(response.status == "success") {
+        this.enquiryPersons = response.data;
+
+        if(this.activity.response == "Join" || this.activity.response == "Absent" || this.activity.response == "Present") {
+          this.getInvitedParticipants();
+        }
+        else {
+          this.kskProvider.dismissProgress();
+        }
+      }
+      else if(response.status == "invalid") {
+        this.kskProvider.showAlertDialog("Fail", response.message);
+        this.kskProvider.clearSessionData();
+        this.app.getRootNav().setRoot('LoginPage');
+      }
+      else {
+        this.kskProvider.showAlertDialog("Fail", response.message);
+      }
+
+    }, (err) => {
+      this.kskProvider.dismissProgress();
+      this.kskProvider.showServerErrorDialog();
+    });
   }
 
   getInvitedParticipants() {
-    this.kskProvider.showProgress();
+    //this.kskProvider.showProgress();
 
     let params = {
       "api_token" : this.token,
@@ -191,6 +234,14 @@ export class ActivityDetailsPage {
     this.navCtrl.push('InvitePage', {
       activity: activity
     });
+  }
+
+  call(number: any) {
+    console.log(number);
+
+    this.callNumber.callNumber(number, false)
+      .then(() => console.log("dialing"))
+      .catch(() => this.kskProvider.showAlertDialog("Fail", "Your device does not support calling or SIM card is not present in your device."))
   }
 
 }

@@ -60,6 +60,20 @@
         <p class="{{activity.participation_status}}">{{activity.participation_num}}/{{activity.slot}}</p>
       </ion-item>
 
+      <div *ngIf="enquiryPersons && enquiryPersons.length > 0" id="enquiry-person">
+        <ion-item text-wrap>
+          <ion-note>For any enquiry about this activity, you may contact the following staffs: </ion-note>
+        </ion-item>
+
+        <ion-list>
+          <ion-item *ngFor="let enquiryPerson of enquiryPersons"  >
+            <p>{{enquiryPerson.full_name}}</p>
+            <small>{{enquiryPerson.phone_no}}</small>
+            <button ion-button color="primary" style="width: 65px" item-end (click)="call(enquiryPerson.phone_no)">Call</button>
+          </ion-item>
+        </ion-list>
+      </div>
+
     </ion-list>
   </ion-card>
 
