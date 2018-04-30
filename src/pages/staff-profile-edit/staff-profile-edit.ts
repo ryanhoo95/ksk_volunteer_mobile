@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, App, ActionSheetController, Platform, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, App, ActionSheetController, Platform, ToastController, normalizeURL } from 'ionic-angular';
 import { KskProvider } from '../../providers/ksk/ksk';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Camera } from '@ionic-native/camera';
@@ -151,7 +151,12 @@ export class StaffProfileEditPage {
     if (img === null) {
       return this.user.profile_image;
     } else {
-      return this.file.dataDirectory + img;
+      if(this.platform.is('android')) {
+        return this.file.dataDirectory + img;
+      }
+      else {
+        return normalizeURL(this.file.dataDirectory + img);
+      }
     }
   }
 
