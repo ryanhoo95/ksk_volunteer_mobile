@@ -200,7 +200,10 @@ export class ActivityDetailsPage {
 
     let params = {
       "api_token" : this.token,
-      "participation_id" : this.activity.participation_id
+      "participation_id" : this.activity.participation_id,
+      "date" : this.activity.activity_date,
+      "start_time" : this.activity.start_time,
+      "end_time" : this.activity.end_time
     };
 
     this.kskProvider.postData(params, "withdrawActivity").then((result) => {
