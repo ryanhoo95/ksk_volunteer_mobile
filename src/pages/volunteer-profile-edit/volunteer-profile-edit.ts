@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ActionSheetController, Platform, ToastController, LoadingController, Loading, App } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ActionSheetController, Platform, ToastController, LoadingController, Loading, App, normalizeURL } from 'ionic-angular';
 import { KskProvider } from '../../providers/ksk/ksk';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Camera } from '@ionic-native/camera';
@@ -142,6 +142,7 @@ export class VolunteerProfileEditPage {
         var correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
         this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
       }
+      //this.kskProvider.showAlertDialog("Path", imagePath + " : " + correctPath);
     }, (err) => {
       this.presentToast('Error while selecting image.');
     });
@@ -178,7 +179,12 @@ export class VolunteerProfileEditPage {
     if (img === null) {
       return this.user.profile_image;
     } else {
-      return this.file.dataDirectory + img;
+      if(this.platform.is('android')) {
+        return this.file.dataDirectory + img;
+      }
+      else {
+        return normalizeURL(this.file.dataDirectory + img);
+      }
     }
   }
 
