@@ -38,37 +38,40 @@ export class InvitePage {
   }
 
   searchVolunteers() {
-    this.kskProvider.showProgress();
+    if(this.searchForm.get("name").value != null && this.searchForm.get("name").value != "") {
+      this.kskProvider.showProgress();
 
-    let params = {
-      "api_token" : this.token,
-      "name" : this.searchForm.get("name").value,
-      "activity_id" : this.activity.activity_id,
-      "invitation_code" : this.activity.invitation_code
-    };
+      let params = {
+        "api_token" : this.token,
+        "name" : this.searchForm.get("name").value,
+        "activity_id" : this.activity.activity_id,
+        "invitation_code" : this.activity.invitation_code
+      };
 
-    this.kskProvider.postData(params, "getVolunteersForInvite").then((result) => {
-      let response: any = result;
-      console.log(response);
+      this.kskProvider.postData(params, "getVolunteersForInvite").then((result) => {
+        let response: any = result;
+        console.log(response);
 
-      this.kskProvider.dismissProgress();
+        this.kskProvider.dismissProgress();
 
-      if(response.status == "success") {
-        this.volunteers = response.data;
-      }
-      else if(response.status == "invalid") {
-        this.kskProvider.showAlertDialog("Fail", response.message);
-        this.kskProvider.clearSessionData();
-        this.app.getRootNav().setRoot('LoginPage');
-      }
-      else {
-        this.kskProvider.showAlertDialog("Fail", response.message);
-      }
+        if(response.status == "success") {
+          this.volunteers = response.data;
+        }
+        else if(response.status == "invalid") {
+          this.kskProvider.showAlertDialog("Fail", response.message);
+          this.kskProvider.clearSessionData();
+          this.app.getRootNav().setRoot('LoginPage');
+        }
+        else {
+          this.kskProvider.showAlertDialog("Fail", response.message);
+        }
 
-    }, (err) => {
-      this.kskProvider.dismissProgress();
-      this.kskProvider.showServerErrorDialog();
-    });
+      }, (err) => {
+        this.kskProvider.dismissProgress();
+        this.kskProvider.showServerErrorDialog();
+      });
+    }
+    
   }
 
   confirmInvite(volunteer) {
