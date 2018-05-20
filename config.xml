@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.ksk.volunteer" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Local KSK Volunteer</name>
+    <name>KSK Volunteer</name>
     <description>A Volunteering App for Kechara Soup Kitchen</description>
     <author email="hb_keong95@hotmail.com" href="">Hoo Boon Keong</author>
     <content src="index.html" />
